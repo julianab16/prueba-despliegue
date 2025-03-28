@@ -1,7 +1,5 @@
 from django.db import models
 
-# Create your models here.
-
 class Publicity(models.Model):
     id_publicity =  models.CharField(max_length=255, primary_key=True)
     title = models.CharField(max_length=255)
@@ -16,4 +14,3 @@ class Publicity(models.Model):
         
     def __str__(self):
         return self.title
-
