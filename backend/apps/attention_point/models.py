@@ -9,5 +9,6 @@ class Attention_Point(models.Model):
         return f"{self.attention_point_id} ({'available' if self.availability else 'occupied'})"
     
     class Meta:
+        db_table='punto_atencion'
         verbose_name = 'Punto de Atención'
         verbose_name_plural = 'Puntos de Atención'

@@ -10,7 +10,7 @@ class Publicity(models.Model):
     is_active = models.BooleanField(default=True)
 
     class Meta:
-        db_table = "publicity"
+        db_table = "publicidad"
         
     def __str__(self):
         return self.title

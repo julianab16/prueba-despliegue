@@ -1,5 +1,6 @@
 from django.db import models
 from apps.attention_point.models import Attention_Point
+from apps.user.models import User
 
 class Ticket(models.Model):
     # El ticket puede estar en proceso, cerrado o abierto
@@ -21,8 +22,8 @@ class Ticket(models.Model):
     priority = models.CharField(max_length=20, choices=PRIORITY_CHOICES, default='low')
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
-    user = models.ForeignKey('user.User', on_delete=models.CASCADE, related_name='tickets_created')
-    assigned_to = models.ForeignKey('user.User', on_delete=models.SET_NULL, null=True, related_name='tickets_assigned')
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='tickets_created')
+    assigned_to = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, related_name='tickets_assigned')
     punto_atencion = models.ForeignKey(Attention_Point, on_delete=models.SET_NULL, null=True)
     
     # La informacion que hay dentro del ticket

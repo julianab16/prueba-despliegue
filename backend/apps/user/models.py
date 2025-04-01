@@ -58,7 +58,7 @@ class User(AbstractUser):
     REQUIRED_FIELDS = ['first_name', 'last_name', 'email', 'dni', 'phone_number', 'role']
     
     class Meta:
-        db_table = 'USUARIO'
+        db_table = 'usuario'
         verbose_name = 'Usuario'
         verbose_name_plural = 'Usuarios'
         ordering = ['id']
@@ -67,4 +67,4 @@ class User(AbstractUser):
         self.first_name = self.first_name.upper()
         self.last_name = self.last_name.upper()
         self.email = self.email.lower()
-        super(Usuario, self).save(force_insert, force_update, using, update_fields)
+        super(User, self).save(force_insert, force_update, using, update_fields)
