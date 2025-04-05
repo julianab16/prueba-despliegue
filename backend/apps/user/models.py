@@ -2,7 +2,6 @@ from django.db import models
 from django.core.validators import RegexValidator
 from django.contrib.auth.models import AbstractUser
 
-
 class User(AbstractUser):
     ADMINISTRADOR = 'ADMINISTRADOR'
     CLIENTE = 'CLIENTE'
