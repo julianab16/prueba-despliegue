@@ -27,7 +27,7 @@ class Ticket(models.Model):
     punto_atencion = models.ForeignKey(Attention_Point, on_delete=models.SET_NULL, null=True)
     
     # La informacion que hay dentro del ticket
-    content = models.TextField()
+    content = models.TextField(default='Default content')
     class Meta:
         db_table = "ticket"
         
