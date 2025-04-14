@@ -1,0 +1,8 @@
+Django==5.0.6
+djangorestframework==3.15.2
+django-environ==0.11.2
+pillow==10.3.0
+django-environ==0.11.2
+psycopg2-binary==2.9.9
+
+pip install -r requirements.txt
