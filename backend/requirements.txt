@@ -1,8 +1,7 @@
-Django==5.0.6
-djangorestframework==3.15.2
-django-environ==0.11.2
-pillow==10.3.0
-django-environ==0.11.2
-psycopg2-binary==2.9.9
+Django==5.2
+pillow==11.1.0
+psycopg2==2.9.10
+python-decouple==3.8
 
-pip install -r requirements.txt
+# To install the dependencies, run the following command in your terminal:
+# pip install -r requirements.txt
