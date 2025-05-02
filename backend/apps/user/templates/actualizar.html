@@ -1,8 +1,7 @@
-<h2>Registrar usuario</h2>
+<h2>Actualizacion de usuarios</h2>
 <form method="post">
     {% csrf_token %}
     {{ form.as_p }}
-
     {% if form.errors %}
         <ul style="color: red;">
         {% for field in form %}
@@ -15,5 +14,5 @@
         {% endfor %}
         </ul>
     {% endif %}
-    <button type="submit">Guardar</button>
+    <button type="submit">Actualizar</button>
 </form>

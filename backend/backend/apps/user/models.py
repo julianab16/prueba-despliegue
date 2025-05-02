@@ -10,7 +10,7 @@ class User(AbstractUser):
     ROLES = [
         (ADMINISTRADOR, 'Administrador'),
         (CLIENTE, 'Cliente'),
-        (EMPLEADO, 'Empleado')
+        (EMPLEADO, 'EMPLEADO')
     ]
     
     role = models.CharField(
@@ -58,8 +58,8 @@ class User(AbstractUser):
     
     class Meta:
         db_table = 'usuario'
-        verbose_name = 'usuario'
-        verbose_name_plural = 'usuarios'
+        verbose_name = 'Usuario'
+        verbose_name_plural = 'Usuarios'
         ordering = ['id']
     
     def save(self, force_insert=False, force_update=False, using=None, update_fields=None):

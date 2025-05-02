@@ -1,0 +1,37 @@
+
+<h1>Usuarios</h1>
+<div class="d-flex justify-content-end mt-5">
+  <a href="{% url 'registro' %}" class="btn btn-success">Agregar</a>
+</div>
+
+<p></p>
+<table class="table">
+    <thead>
+      <tr>
+        <th scope="col">ID</th>
+        <th scope="col">First Name</th>
+        <th scope="col">Last Name</th>
+        <th scope="col">Email</th>
+        <th scope="col">Phone Number</th>
+        <th scope="col">Role</th>
+        <th scope="col">Prioridad</th>
+        <th scope="col">Editar</th>
+        <th scope="col">Eliminar</th>
+      </tr>
+    </thead>
+    <tbody>
+        {% for usuario in usuarios %}
+            <tr>
+                <th scope="row">{{usuario.dni}}</th>
+                <td>{{usuario.first_name}}</td>
+                <td>{{usuario.last_name}}</td>
+                <td>{{usuario.email}}</td>
+                <td>{{usuario.phone_number}}</td>
+                <td>{{usuario.role}}</td>
+                <td>{{usuario.prioridad}}</td>
+                <td><a class="btn btn-warning" href="{% url 'actualizar' usuario.dni %}">Editar</a></td>
+                <td><a class="btn btn-danger" href="{% url 'eliminar' usuario.dni %}">Eliminar</a></td>
+            </tr>
+        {% endfor %}
+    </tbody>
+  </table>
