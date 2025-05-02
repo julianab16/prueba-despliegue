@@ -16,9 +16,12 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
+from apps.user import urls as user_urls
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('ticket/', include('apps.ticket.urls')), 
-    path('', include('apps.user.urls')),
+    path('api/', include('apps.user.urls')),  # Agrega esta línea para incluir las rutas de la app `user`
+    #path('', include('apps.user.urls')),
+    #path('hola/', views.hello),
 ]
