@@ -21,15 +21,15 @@ function App() {
                 path="/"
                 element={
                   <ProtectedRoute>
-                    <Dashboard />
+                    <TicketManagement />
                   </ProtectedRoute>
                 }
               />
                             <Route
-                path="/tickets"
+                path="/dashboard"
                 element={
                   <ProtectedRoute>
-                    <TicketManagement />
+                    <Dashboard />
                   </ProtectedRoute>
                 }
               />

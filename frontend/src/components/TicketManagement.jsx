@@ -1,6 +1,7 @@
 "use client"
 
-import "./TicketManagement.css" // Asegúrate de crear este archivo para estilos personalizados
+import "./TicketManagement.css"
+import AttentionPointsGrid from "./AttentionPointsGrid"
 
 const TicketManagement = () => {
   return (
@@ -9,17 +10,9 @@ const TicketManagement = () => {
       <div className="attention-points-panel">
         <div className="attention-points-header">
           <h3>Puntos de Atención</h3>
-          <button className="new-attention-point-btn">
-            + {/* Icono de más */}
-          </button>
+          <button className="new-attention-point-btn">+</button>
         </div>
-        <div className="attention-points-grid">
-          {/* Ejemplo de puntos de atención */}
-          <div className="attention-point">Punto 1</div>
-          <div className="attention-point">Punto 2</div>
-          <div className="attention-point">Punto 3</div>
-          <div className="attention-point">Punto 4</div>
-        </div>
+        <AttentionPointsGrid />
       </div>
 
       {/* Panel derecho: Lista de tickets */}
