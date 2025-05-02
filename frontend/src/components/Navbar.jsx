@@ -20,6 +20,7 @@ const Navbar = () => {
       {isAuthenticated ? (
         <div className="navbar-links">
           <Link to="/">Dashboard</Link>
+          <Link to="/tickets">Manejo de tickets</Link>
           <Link to="/users">Usuarios</Link>
           <button onClick={handleLogout} className="btn btn-secondary">
             Cerrar Sesión

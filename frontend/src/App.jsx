@@ -3,6 +3,7 @@ import Login from "./components/Login"
 import Dashboard from "./components/Dashboard"
 import UserList from "./components/UserList"
 import UserForm from "./components/UserForm"
+import TicketManagement from "./components/TicketManagement" // Importar el nuevo componente
 import Navbar from "./components/Navbar"
 import { AuthProvider } from "./context/AuthContext"
 import ProtectedRoute from "./components/ProtectedRoute"
@@ -21,6 +22,14 @@ function App() {
                 element={
                   <ProtectedRoute>
                     <Dashboard />
+                  </ProtectedRoute>
+                }
+              />
+                            <Route
+                path="/tickets"
+                element={
+                  <ProtectedRoute>
+                    <TicketManagement />
                   </ProtectedRoute>
                 }
               />
