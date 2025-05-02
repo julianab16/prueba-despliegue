@@ -9,7 +9,7 @@ urlpatterns = [
     path('actualizar/<int:user_dni>/', edit_user, name='actualizar'),
     path('eliminar/<int:user_dni>/', delete_user, name='eliminar'),
 ]
-    """"
+    """
 
 from django.urls import path, include
 from rest_framework.routers import DefaultRouter

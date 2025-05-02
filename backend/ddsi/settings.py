@@ -91,19 +91,27 @@ WSGI_APPLICATION = 'ddsi.wsgi.application'
 
 # DATABASES = {
 #     'default': {
-#         'ENGINE': 'django.db.backends.sqlite3',
+#         'ENGINE': 'django.db.backends.postgresql_psycopg2',
 #         'NAME': config('DB_NAME'),
 #         'USER': config('DB_USER'),
 #         'PASSWORD': config('DB_PASSWORD'),
 #         'HOST': config('DB_HOST', default='localhost'),
 #         'PORT': config('DB_PORT', default='5432'),
+#      'default': {
+#        'ENGINE': 'django.db.backends.sqlite3',
+#        'NAME': BASE_DIR / 'db.sqlite3',
+#    }
 #     }
 # }
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+         'ENGINE': 'django.db.backends.postgresql_psycopg2',
+         'NAME': config('DB_NAME'),
+         'USER': config('DB_USER'),
+         'PASSWORD': config('DB_PASSWORD'),
+         'HOST': config('DB_HOST', default='localhost'),
+         'PORT': config('DB_PORT', default='5432'),
     }
 }
 
@@ -151,9 +159,12 @@ STATIC_URL = 'static/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 REST_FRAMEWORK = {
-    'DEFAULT_AUTHENTICATION_CLASSES': [
+    'DEFAULT_AUTHENTICATION_CLASSES': (
         'rest_framework_simplejwt.authentication.JWTAuthentication',
-    ]
+    ),
+    'DEFAULT_PERMISSION_CLASSES': (
+        'rest_framework.permissions.IsAuthenticated',
+    ),
 }
 
 CORS_ALLOWED_ORIGINS = [
