@@ -15,7 +15,7 @@ from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 
 class UserSerializer(serializers.ModelSerializer):
     password = serializers.CharField(write_only=True)
-    is_staff = serializers.BooleanField(required=False)  # Agregar el campo is_staff
+    #is_staff = serializers.BooleanField(required=False)  # Agregar el campo is_staff  --QUITAR ESTO 
 
     class Meta:
         model = User
@@ -23,7 +23,7 @@ class UserSerializer(serializers.ModelSerializer):
                   'dni', 'phone_number', 'password', 'role', 'prioridad', 'is_staff']
     
     def create(self, validated_data):
-        is_staff = validated_data.pop('is_staff', False)  # Obtener is_staff del frontend
+        #is_staff = validated_data.pop('is_staff', False)  # Obtener is_staff del frontend  --QUITAR ESTO 
         user = User.objects.create_user(
             username=validated_data['username'],
             first_name=validated_data['first_name'],
@@ -31,8 +31,9 @@ class UserSerializer(serializers.ModelSerializer):
             email=validated_data['email'],
             dni=validated_data['dni'],
             phone_number=validated_data['phone_number'],
-            password=validated_data['password'],
-            is_staff=is_staff,  # Asignar is_staff al usuario
+            role=validated_data.get('role', User.CLIENTE),
+            password=validated_data['password'], 
+            #is_staff=is_staff,  # Asignar is_staff al usuario --QUITAR ESTO 
         )
         return user
     

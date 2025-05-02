@@ -57,7 +57,7 @@ const UserForm = () => {
     const { name, value, type, checked } = e.target
     setFormData((prev) => ({
       ...prev,
-      [name]: type === "checkbox" ? checked : value, // Maneja el checkbox para `is_staff`
+      [name]: type === "checkbox" ? checked : value,
     }))
   }
 
@@ -65,7 +65,9 @@ const UserForm = () => {
     // Basic validation
     if (!formData.username) return "El nombre de usuario es obligatorio"
     if (!formData.email) return "El email es obligatorio"
-    if (!isEditMode && !formData.password) return "La contraseña es obligatoria para nuevos usuarios"
+    if (formData.role !== "CLIENTE" && !formData.password) {
+      return "La contraseña es obligatoria para administradores y empleados"
+    }
 
     return null
   }
@@ -213,8 +215,28 @@ const UserForm = () => {
         </div>
 
         <div className="form-group">
+          <label htmlFor="role">Rol</label>
+          <select
+            id="role"
+            name="role"
+            className="form-control"
+            value={formData.role}
+            onChange={handleChange}
+            disabled={loading}
+          >
+            <option value="CLIENTE">Cliente</option>
+            <option value="EMPLEADO">Empleado</option>
+            <option value="ADMINISTRADOR">Administrador</option>
+          </select>
+        </div>
+
+        <div className="form-group">
           <label htmlFor="password">
-            {isEditMode ? "Contraseña (dejar en blanco para mantener la actual)" : "Contraseña"}
+            {formData.role === "CLIENTE"
+              ? "Contraseña (no requerida para clientes)"
+              : isEditMode
+              ? "Contraseña (dejar en blanco para mantener la actual)"
+              : "Contraseña"}
           </label>
           <input
             type="password"
@@ -223,28 +245,11 @@ const UserForm = () => {
             className="form-control"
             value={formData.password}
             onChange={handleChange}
-            disabled={loading}
+            disabled={formData.role === "CLIENTE" || loading} // Deshabilitar si es CLIENTE
           />
         </div>
-        
-        <div className="form-group">
-        <label htmlFor="role">Rol</label>
-        <select
-          id="role"
-          name="role"
-          className="form-control"
-          value={formData.role}
-          onChange={handleChange}
-          disabled={loading}
-        >
-          <option value="CLIENTE">Cliente</option>
-          <option value="EMPLEADO">Empleado</option>
-          <option value="ADMINISTRADOR">Administrador</option>
-        </select>
-      </div>
 
-        {/* Nuevo campo para seleccionar si el usuario es staff */}
-        <div className="form-group">
+        {/* <div className="form-group">
           <label htmlFor="is_staff">¿Es Staff?</label>
           <input
             type="checkbox"
@@ -254,7 +259,7 @@ const UserForm = () => {
             onChange={handleChange}
             disabled={loading}
           />
-        </div>
+        </div> */}
 
         <div className="form-actions">
           <Link to="/users" className="btn btn-secondary">
