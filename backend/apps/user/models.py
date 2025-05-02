@@ -10,7 +10,7 @@ class User(AbstractUser):
     ROLES = [
         (ADMINISTRADOR, 'Administrador'),
         (CLIENTE, 'Cliente'),
-        (EMPLEADO, 'EMPLEADO')
+        (EMPLEADO, 'Empleado')
     ]
     
     role = models.CharField(

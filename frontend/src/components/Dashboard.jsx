@@ -44,6 +44,13 @@ const Dashboard = () => {
             Ver Usuarios
           </Link>
         </div>
+        <div className="dashboard-card">
+          <h3>Puntos de atencion</h3>
+          <p>Total de puntos de atencion: {}</p>
+          <Link to="/" className="btn btn-primary">
+            Ver puntos de atencion
+          </Link>
+        </div>
       </div>
     </div>
   )

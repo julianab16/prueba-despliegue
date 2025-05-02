@@ -46,7 +46,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'rest_framework_simplejwt',
     'rest_framework_simplejwt.token_blacklist',
-    'drf_spectacular',
+ #   'drf_spectacular',
     'corsheaders',
     'apps.attention_point',
     'apps.publicity',
