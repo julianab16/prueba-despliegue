@@ -1,6 +1,7 @@
 "use client"
 
 import { createContext, useState, useEffect, useContext } from "react"
+import { jwtDecode } from "jwt-decode" // Import jwt-decode
 import { api } from "../services/api"
 
 const AuthContext = createContext()
@@ -15,7 +16,14 @@ export const AuthProvider = ({ children }) => {
     // Check if user is already logged in
     const accessToken = localStorage.getItem("accessToken")
     if (accessToken) {
-      setUser({ token: accessToken })
+      try {
+        const decodedToken = jwtDecode(accessToken) // Decode the token
+        setUser({ ...decodedToken, token: accessToken }) // Set user details from the token
+      } catch (error) {
+        console.error("Error decoding token:", error)
+        localStorage.removeItem("accessToken")
+        localStorage.removeItem("refreshToken")
+      }
     }
     setLoading(false)
   }, [])
@@ -27,9 +35,10 @@ export const AuthProvider = ({ children }) => {
 
       localStorage.setItem("accessToken", access)
       localStorage.setItem("refreshToken", refresh)
-      console.log("Enviando credenciales:", { username, password })
 
-      setUser({ token: access })
+      const decodedToken = jwtDecode(access) // Decode the token
+      setUser({ ...decodedToken, token: access }) // Set user details from the token
+
       return true
     } catch (error) {
       console.error("Login error:", error)

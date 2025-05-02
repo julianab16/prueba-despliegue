@@ -58,6 +58,6 @@ class CustomTokenObtainPairSerializer(TokenObtainPairSerializer):
         token['first_name'] = user.first_name
         token['last_name'] = user.last_name
         token['dni'] = user.dni
-        token['rol'] = user.role
+        token['role'] = user.role
         
         return token
