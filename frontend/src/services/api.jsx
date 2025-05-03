@@ -63,3 +63,7 @@ export const userService = {
   partialUpdate: (id, data) => api.patch(`/api/users/${id}/`, data),
   delete: (id) => api.delete(`/api/users/${id}/`),
 }
+
+export const attentionPointService = {
+  getAll: () => api.get("/api/attention-points/"), // Asegúrate de que esta ruta coincida con tu backend
+}

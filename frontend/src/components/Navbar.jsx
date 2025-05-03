@@ -5,7 +5,7 @@ import { Link } from "react-router-dom"
 import { useAuth } from "../context/AuthContext"
 
 const Navbar = () => {
-  const { isAuthenticated, logout } = useAuth()
+  const { isAuthenticated, logout, user } = useAuth()
 
   const handleLogout = async () => {
     await logout()
@@ -19,8 +19,9 @@ const Navbar = () => {
 
       {isAuthenticated ? (
         <div className="navbar-links">
-          <Link to="/">Dashboard</Link>
-          <Link to="/users">Usuarios</Link>
+          <Link to="/dashboard">Dashboard</Link>
+          {user?.role !== "CLIENTE" && <Link to="/">Puntos de atencion</Link>}
+          {user?.role == "ADMINISTRADOR" && <Link to="/users">Usuarios</Link>}
           <button onClick={handleLogout} className="btn btn-secondary">
             Cerrar Sesión
           </button>

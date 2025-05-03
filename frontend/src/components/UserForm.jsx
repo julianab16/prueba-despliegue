@@ -59,6 +59,7 @@ const UserForm = () => {
     setFormData((prev) => ({
       ...prev,
       [name]: type === "checkbox" ? checked : value,
+      [name]: type === "checkbox" ? checked : value,
     }))
   }
 
@@ -66,6 +67,9 @@ const UserForm = () => {
     // Basic validation
     if (!formData.username) return "El nombre de usuario es obligatorio"
     if (!formData.email) return "El email es obligatorio"
+    if (formData.role !== "CLIENTE" && !formData.password) {
+      return "La contraseña es obligatoria para administradores y empleados"
+    }
     if (formData.role !== "CLIENTE" && !formData.password) {
       return "La contraseña es obligatoria para administradores y empleados"
     }
@@ -217,6 +221,7 @@ const UserForm = () => {
             disabled={loading}
           />
         </div>
+
 
         <div className="form-group">
           <label htmlFor="role">Rol</label>
