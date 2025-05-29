@@ -44,42 +44,52 @@ const Login = () => {
   }
 
   return (
-    <div className="form-container">
-      <h2 className="form-title">Iniciar Sesión</h2>
-
-      {error && <div className="alert alert-danger">{error}</div>}
-
-      <form onSubmit={handleSubmit}>
-        <div className="form-group">
-          <label htmlFor="username">Usuario</label>
-          <input
-            type="text"
-            id="username"
-            className="form-control"
-            value={username}
-            onChange={(e) => setUsername(e.target.value)}
-            disabled={loading}
-          />
+    <div className="login-modern-wrapper">
+      <div className="login-modern-left">
+        <h2>Bienvenido a</h2>
+        <div className="login-modern-logo">
+          <img src="/login-side.png" alt="Logo" />
         </div>
-
-        <div className="form-group">
-          <label htmlFor="password">Contraseña</label>
-          <input
-            type="password"
-            id="password"
-            className="form-control"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            disabled={loading}
-          />
-        </div>
-
-        <div className="form-actions">
-          <button type="submit" className="btn btn-primary" disabled={loading}>
-            {loading ? "Iniciando sesión..." : "Iniciar Sesión"}
-          </button>
-        </div>
-      </form>
+        <h1>Qline</h1>
+        <p>
+          Qline es un sistema orientado a la correcta gestion de tickets generados en tiempo real a puntos de atención.
+        </p>
+      </div>
+      <div className="login-modern-right">
+        <h2 className="form-title">Iniciar Sesión</h2>
+        {error && <div className="alert alert-danger">{error}</div>}
+        <form onSubmit={handleSubmit}>
+          <div className="form-group">
+            <label htmlFor="username">Usuario</label>
+            <input
+              type="text"
+              id="username"
+              className="form-control"
+              value={username}
+              onChange={(e) => setUsername(e.target.value)}
+              disabled={loading}
+              placeholder="Ingrese su usuario"
+            />
+          </div>
+          <div className="form-group">
+            <label htmlFor="password">Contraseña</label>
+            <input
+              type="password"
+              id="password"
+              className="form-control"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              disabled={loading}
+              placeholder="Ingrese su contraseña"
+            />
+          </div>
+          <div className="form-actions">
+            <button type="submit" className="btn btn-primary" disabled={loading}>
+              {loading ? "Iniciando sesión..." : "Iniciar Sesión"}
+            </button>
+          </div>
+        </form>
+      </div>
     </div>
   )
 }
