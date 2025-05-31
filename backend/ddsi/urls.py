@@ -22,7 +22,8 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('ticket/', include('apps.ticket.urls')), 
     path('api/attention-points/', include('apps.attention_point.urls')),  # Nueva ruta    
-    path('api/', include('apps.user.urls')),  # Agrega esta línea para incluir las rutas de la app `user`
+    path('api/', include('apps.user.urls')),  
+    path('api/tickets/', include('apps.ticket.urls')), 
     #path('', include('apps.user.urls')),
     #path('hola/', views.hello),
 ]

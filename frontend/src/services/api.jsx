@@ -67,3 +67,7 @@ export const userService = {
 export const attentionPointService = {
   getAll: () => api.get("/api/attention-points/"), // Asegúrate de que esta ruta coincida con tu backend
 }
+
+export const ticketService = {
+  getAll: () => api.get("/api/tickets/")
+}
