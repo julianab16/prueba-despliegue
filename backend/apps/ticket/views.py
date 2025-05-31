@@ -1,8 +1,26 @@
-from django.shortcuts import render
-from django.shortcuts import render, get_object_or_404
-from django.http import HttpResponse, HttpResponseRedirect
 from .models import Ticket
-#from .forms import TuFormulario
+from .serializer import TicketSerializer
+from rest_framework.views import APIView
+from rest_framework.response import Response
+from rest_framework import status
+from django.db.models import Case, When, IntegerField
 
-def mi_vista(request):
-    return HttpResponse("hola, soy yo")
+
+class TicketListView(APIView):
+    def get(self, request):
+        tickets = Ticket.objects.annotate(
+            priority_order=Case(
+                When(priority='high', then=0),
+                When(priority='low', then=1),
+                output_field=IntegerField(),
+            )
+        ).order_by('priority_order', 'created_at')
+        serializer = TicketSerializer(tickets, many=True)
+        return Response(serializer.data, status=status.HTTP_200_OK)
+    
+    def post(self, request):
+        serializer = TicketSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
