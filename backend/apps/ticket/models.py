@@ -33,3 +33,8 @@ class Ticket(models.Model):
         
     def __str__(self):
         return self.title
+    
+    def save(self, *args, **kwargs):
+        if self.user.prioridad :
+            self.priority = 'high'
+        super().save(*args, **kwargs)
