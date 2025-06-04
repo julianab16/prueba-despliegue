@@ -1,6 +1,4 @@
 "use client"
-
-import "./TicketManagement.css"
 import AttentionPointsGrid from "./AttentionPointsGrid"
 
 const TicketManagement = () => {
@@ -10,7 +8,6 @@ const TicketManagement = () => {
       <div className="attention-points-panel">
         <div className="attention-points-header">
           <h3>Puntos de Atención</h3>
-          <button className="new-attention-point-btn">+</button>
         </div>
         <AttentionPointsGrid />
       </div>

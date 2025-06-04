@@ -40,13 +40,13 @@ body {
 
 /* Navbar */
 .navbar {
-  background-color: #4A90E2;
+  background-color: var(--primary-color);
   padding: 1rem 2rem;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  border-bottom-left-radius: 15px;
-  border-bottom-right-radius: 15px;
+  /* border-bottom-left-radius: 15px;
+  border-bottom-right-radius: 15px; */
 }
 
 .navbar-brand {
@@ -59,6 +59,7 @@ body {
 .navbar-links {
   display: flex;
   gap: 1.5rem;
+  align-items: center;
 }
 
 .navbar-links a {
@@ -73,9 +74,9 @@ body {
 /* Buttons */
 .btn {
   cursor: pointer;
-  padding: 0.75rem 2rem;
+  padding: 0.5rem 2rem;
   border-radius: 8px;
-  font-weight: 600;
+  font-weight: 550;
   font-size: 1rem;
   transition: background-color 0.3s, box-shadow 0.2s;
   border: none;
@@ -175,18 +176,39 @@ th {
   margin-bottom: 1rem;
 }
 
+.ticket-request-center {
+  min-height: 80vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
 /* Form styles */
 .form-container {
-  max-width: 500px;
-  min-width: 320px;
+  max-width: 420px;
+  min-width: 420px;
+  max-height: auto;
+  min-height: 360px;
+
   margin: 2rem auto;
-  background: rgba(26, 26, 26, 0.95);
+  background: var(--primary-color);
   padding: 2.5rem 2.5rem 2rem 2.5rem;
   border-radius: 16px;
   box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
   backdrop-filter: blur(2px);
   border: 1px solid rgba(255,255,255,0.1);
   color: #fff;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center; /* Centra verticalmente */
+  /* align-items: center;     Centra horizontalmente */
+}
+
+.ticket-options {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
 }
 
 .form-title {
@@ -195,7 +217,7 @@ th {
   font-size: 2rem;
   font-weight: 700;
   letter-spacing: 1px;
-  color: var(--primary-color);
+  color: #ffffff;
 }
 
 .form-group {
@@ -366,9 +388,75 @@ th {
   border: none;
   transition: background 0.2s;
 }
+
 .login-modern-right .btn-primary:hover {
   background: var(--primary-color);
 }
+
+.ticket-management-container {
+  display: flex;
+  gap: 1rem;
+  height: 100%;
+}
+  
+    .attention-points-panel {
+      flex: 3; /* Ocupa 3/4 del espacio */
+      background-color: var(--primary-color);
+      padding: 1rem;
+      border-radius: 8px;
+      color: white;
+      display: flex;
+      flex-direction: column;
+    }
+    
+    .attention-points-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); /* Ajusta el tamaño mínimo de los elementos */
+      gap: 1rem;
+      flex-grow: 1; /* Permite que la grilla ocupe todo el espacio disponible */
+    }
+    
+    .attention-point {
+      background-color: #333;
+      padding: 1rem;
+      text-align: center;
+      border-radius: 4px;
+      color: white;
+      font-weight: bold;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100px; /* Altura fija para los puntos de atención */
+    }
+    
+    .tickets-panel {
+      flex: 1; /* Ocupa 1/4 del espacio */
+      background-color: var(--primary-color);
+      padding: 1rem;
+      border-radius: 8px;
+      color: white;
+    }
+    
+    .tickets-list {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+    
+    .ticket-item {
+      background-color: #333;
+      padding: 0.75rem;
+      margin-bottom: 0.5rem;
+      border-radius: 4px;
+      color: white;
+    }
+
+    .attention-points-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+  }
 
 /* Responsive */
 @media (max-width: 700px) {
