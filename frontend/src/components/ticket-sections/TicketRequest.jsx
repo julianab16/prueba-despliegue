@@ -31,6 +31,7 @@ const TicketRequest = () => {
         // El usuario existe, puedes continuar con el flujo normal
         const user = response.data[0]
         setSuccess("Usuario encontrado, procesando solicitud...")
+        console.log("Usuario encontrado:", user)
         
         await ticketService.create({
         user: user.id,
