@@ -1,6 +1,9 @@
-import React, { useState } from "react"
+import { useState, useEffect } from "react"
+import { userService } from "../../services/api"
 
 const TicketRequest = () => {
+  const [loading, setLoading] = useState(false)
+  const [error, setError] = useState("")
   const [formData, setFormData] = useState({
     dni: "",
     prioridad: false,
@@ -14,12 +17,28 @@ const TicketRequest = () => {
       [name]: type === "checkbox" ? checked : value,
     }))
   }
-
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault()
-    //Aqui por defecto se muestran las opciones cuando no está registrado
-    setShowOptions(true)
+    setLoading(true)
+    setError("")
+    try {
+      const response = await userService.getByDni(formData.dni)
+      if (response.data && response.data.length > 0) {
+        // El usuario existe, puedes continuar con el flujo normal
+        alert("Usuario encontrado, puedes pedir tu ticket.")
+        // Aquí puedes continuar el proceso, por ejemplo, pedir el ticket directamente
+      } else {
+        // El usuario NO existe, muestra las opciones
+        setShowOptions(true)
+      }
+    } catch (err) {
+      setError("Error al buscar el usuario")
+      setShowOptions(true)
+    } finally {
+      setLoading(false)
+    }
   }
+
 
   const handleGuest = () => {
     alert(`Ticket solicitado como invitado para la cédula: ${formData.dni}${formData.prioridad ? " (prioridad)" : ""}`)
@@ -36,6 +55,7 @@ const TicketRequest = () => {
     setFormData((prev) => ({
       ...prev,
       dni: formData.dni,
+
     }))
   }
 

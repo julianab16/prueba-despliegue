@@ -15,7 +15,11 @@ python-decouple==3.8
 #python-decouple==3.8
 
 # To install the dependencies, run the following command in your terminal:
-
-
-# To install the dependencies, run the following command in your terminal:
 # pip install -r requirements.txt
+
+#run backend
+#python manage.py runserver
+
+#run frontend
+#npm run dev
+

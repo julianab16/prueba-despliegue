@@ -1,6 +1,6 @@
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
-from .models import User  # Asegúrate de importar tu modelo personalizado
+from .models import User 
 
 class CustomUserForm(UserCreationForm):
     class Meta:

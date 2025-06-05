@@ -1,6 +1,7 @@
 from django.db import models
 from apps.attention_point.models import Attention_Point
 from apps.user.models import User
+from django.core.exceptions import ValidationError
 
 class Ticket(models.Model):
     # El ticket puede estar en proceso, cerrado o abierto
@@ -15,9 +16,6 @@ class Ticket(models.Model):
         ('high', 'High'),
     ]
 
-    id_ticket =  models.CharField(max_length=255, primary_key=True)
-    title = models.CharField(max_length=255)
-    description = models.TextField()
     status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='open')
     priority = models.CharField(max_length=20, choices=PRIORITY_CHOICES, default='low')
     created_at = models.DateTimeField(auto_now_add=True)
@@ -26,15 +24,16 @@ class Ticket(models.Model):
     assigned_to = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, related_name='tickets_assigned')
     punto_atencion = models.ForeignKey(Attention_Point, on_delete=models.SET_NULL, null=True)
     
-    # La informacion que hay dentro del ticket
-    content = models.TextField(default='Default content')
     class Meta:
         db_table = "ticket"
         
     def __str__(self):
-        return self.title
+        return self.user.username
     
     def save(self, *args, **kwargs):
+        if self.assigned_to.role != 'EMPLEADO':
+            raise ValidationError("Solo los usuarios con rol 'CLIENTE' pueden crear tickets.")
+        
         if self.user.prioridad :
             self.priority = 'high'
         super().save(*args, **kwargs)
