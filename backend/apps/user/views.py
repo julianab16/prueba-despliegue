@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+
 
 """"
 from .forms import CustomUserForm, UpdateUserForm
@@ -38,8 +38,6 @@ def delete_user(request, user_dni):
 
         """""
 
-from .forms import CustomUserForm
-from django.http import HttpResponse #quitar esto despues de probar
 from rest_framework import viewsets, permissions, status
 from rest_framework.response import Response
 from rest_framework.decorators import action
@@ -84,6 +82,16 @@ class UserViewSet(viewsets.ModelViewSet):
         except Exception as e:
             return Response({"error": str(e)}, status=status.HTTP_400_BAD_REQUEST)
 
+    @action(detail=False, methods=['get'], url_path='by_dni', permission_classes=[permissions.AllowAny])
+    def by_dni(self, request):
+            dni = request.query_params.get('dni')
+            if not dni:
+                return Response({"error": "DNI requerido"}, status=400)
+            user = User.objects.filter(dni=dni).first()
+            if not user:
+                return Response([], status=200)
+            serializer = self.get_serializer(user)
+            return Response([serializer.data], status=200)
 
 class CustomTokenObtainPairView(TokenObtainPairView):
     serializer_class = CustomTokenObtainPairSerializer

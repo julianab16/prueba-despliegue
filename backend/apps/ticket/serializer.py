@@ -5,7 +5,6 @@ class TicketSerializer(serializers.ModelSerializer):
     class Meta:
         model = Ticket
         fields = [
-            'id_ticket', 'status', 'priority', 
-            'created_at', 'updated_at', 'user', 'assigned_to', 
-            'punto_atencion'
+            'id_ticket','status', 'priority', 
+            'created_at', 'updated_at', 'user', 'assigned_to'
         ]

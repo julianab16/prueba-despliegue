@@ -15,14 +15,14 @@ class Ticket(models.Model):
         ('low', 'Low'),
         ('high', 'High'),
     ]
-
+    id_ticket = models.AutoField(primary_key=True)
     status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='open')
     priority = models.CharField(max_length=20, choices=PRIORITY_CHOICES, default='low')
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='tickets_created')
     assigned_to = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, related_name='tickets_assigned')
-    punto_atencion = models.ForeignKey(Attention_Point, on_delete=models.SET_NULL, null=True)
+    #punto_atencion = models.ForeignKey(Attention_Point, on_delete=models.SET_NULL, null=True)
     
     class Meta:
         db_table = "ticket"
@@ -31,7 +31,7 @@ class Ticket(models.Model):
         return self.user.username
     
     def save(self, *args, **kwargs):
-        if self.assigned_to.role != 'EMPLEADO':
+        if self.user.role != 'CLIENTE':
             raise ValidationError("Solo los usuarios con rol 'CLIENTE' pueden crear tickets.")
         
         if self.user.prioridad :

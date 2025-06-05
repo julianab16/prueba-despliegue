@@ -58,7 +58,7 @@ api.interceptors.response.use(
 export const userService = {
   getAll: () => api.get("/api/users/"),
   getById: (id) => api.get(`/api/users/${id}/`),
-  getByDni: (dni) => api.get(`/api/users/?dni=${dni}`),
+  getByDni: (dni) => api.get(`/api/users/by_dni/?dni=${dni}`),
   create: (data) => api.post("/api/users/", data),
   update: (id, data) => api.put(`/api/users/${id}/`, data),
   partialUpdate: (id, data) => api.patch(`/api/users/${id}/`, data),
@@ -70,5 +70,7 @@ export const attentionPointService = {
 }
 
 export const ticketService = {
-  getAll: () => api.get("/api/tickets/")
+  getAll: () => api.get("/api/tickets/"),
+  create: (data) => api.post("/api/tickets/", data),
+
 }
