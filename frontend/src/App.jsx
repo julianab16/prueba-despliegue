@@ -8,10 +8,11 @@ import Navbar from "./components/Navbar"
 import { AuthProvider } from "./context/AuthContext"
 import ProtectedRoute from "./components/ProtectedRoute"
 import TicketRequest from "./components/ticket-sections/TicketRequest"
+import ClientRegisterForm from "./components/ticket-sections/ClientRegisterForm"
 
 function AppContent() {
   const location = useLocation()
-  const hideNavbar = location.pathname === "/login" || location.pathname === "/ticket-req"
+  const hideNavbar = location.pathname === "/login" || location.pathname === "/ticket-req" || location.pathname === "/ticket-req/new-user"
 
   return (
     <div className="app-container">
@@ -20,6 +21,7 @@ function AppContent() {
         <Routes>
           <Route path="/login" element={<Login />} />
           <Route path="/ticket-req" element={<TicketRequest />} />
+          <Route path="/ticket-req/new-user" element={<ClientRegisterForm />} />
           
           <Route
             path="/"
