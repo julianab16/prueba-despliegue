@@ -1,0 +1,199 @@
+"use client"
+
+import { useState } from "react"
+import { useNavigate, Link, useLocation } from "react-router-dom"
+import { useTicketRequest } from "./UseTicketRequest"
+import { userService } from "../../services/api"
+
+
+const RegisterTicketRequest = () => {
+    const navigate = useNavigate()
+    const location = useLocation()
+    const searchParams = new URLSearchParams(location.search)
+    const dniFromQuery = searchParams.get("dni") || ""
+
+    const [formData, setFormData] = useState({
+        username: "",
+        first_name: "",
+        last_name: "",
+        email: "",
+        dni: dniFromQuery,
+        phone_number: "",
+        prioridad: false,
+        role: "CLIENTE", // Fijo para cliente
+    })
+
+    const [loading, setLoading] = useState(false)
+    const [error, setError] = useState("")
+    const { pedirTicket, error: ticketError, success: ticketSuccess } = useTicketRequest()
+
+    const isDniDisabled = !!dniFromQuery
+
+    const handleChange = (e) => {
+        const { name, value, type, checked } = e.target
+        setFormData((prev) => ({
+            ...prev,
+            [name]: type === "checkbox" ? checked : value,
+        }))
+    }
+
+    const validateForm = () => {
+        if (!formData.username) return "El nombre de usuario es obligatorio"
+        if (!formData.email) return "El email es obligatorio"
+        return null
+    }
+
+    const handleSubmit = async (e) => {
+        e.preventDefault()
+        setError("")
+
+        const validationError = validateForm()
+        if (validationError) {
+            setError(validationError)
+            return
+        }
+
+        setLoading(true)
+
+        try {
+            const dataToSubmit = { ...formData }
+            await userService.create(dataToSubmit)
+            // Pedir ticket automáticamente después de registrar
+            const ok = await pedirTicket({
+                dni: dataToSubmit.dni,
+                prioridad: dataToSubmit.prioridad,
+            })
+            if (ok) {
+                navigate("/ticket-req")
+            } else {
+                setError(ticketError || "Error al pedir el ticket")
+            }
+        } catch (err) {
+            let errorMessage = "Error al guardar el usuario"
+            if (err.response && err.response.data) {
+                const apiErrors = err.response.data
+                if (typeof apiErrors === "object") {
+                    const firstError = Object.values(apiErrors)[0]
+                    if (Array.isArray(firstError) && firstError.length > 0) {
+                        errorMessage = firstError[0]
+                    } else if (typeof firstError === "string") {
+                        errorMessage = firstError
+                    }
+                }
+            }
+            setError(errorMessage)
+            console.error(err)
+        } finally {
+            setLoading(false)
+        }
+    }
+
+    const handleCancel = () => {
+        e.preventDefault()
+        navigate("/ticket-req")
+    }
+
+    return (
+        <div className="form-container">
+            <h2 className="form-title">Registro</h2>
+            {error && <div className="alert alert-danger">{error}</div>}
+            <form onSubmit={handleSubmit}>
+                <div className="form-group">
+                    <label htmlFor="username">Usuario</label>
+                    <input
+                        type="text"
+                        id="username"
+                        name="username"
+                        className="form-control"
+                        value={formData.username}
+                        onChange={handleChange}
+                        disabled={loading}
+                    />
+                </div>
+                <div className="form-group">
+                    <label htmlFor="first_name">Nombre</label>
+                    <input
+                        type="text"
+                        id="first_name"
+                        name="first_name"
+                        className="form-control"
+                        value={formData.first_name}
+                        onChange={handleChange}
+                        disabled={loading}
+                    />
+                </div>
+                <div className="form-group">
+                    <label htmlFor="last_name">Apellido</label>
+                    <input
+                        type="text"
+                        id="last_name"
+                        name="last_name"
+                        className="form-control"
+                        value={formData.last_name}
+                        onChange={handleChange}
+                        disabled={loading}
+                    />
+                </div>
+                <div className="form-group">
+                    <label htmlFor="email">Email</label>
+                    <input
+                        type="email"
+                        id="email"
+                        name="email"
+                        className="form-control"
+                        value={formData.email}
+                        onChange={handleChange}
+                        disabled={loading}
+                    />
+                </div>
+                <div className="form-group">
+                    <label htmlFor="dni">Cedula</label>
+                    <input
+                        type="number"
+                        id="dni"
+                        name="dni"
+                        className="form-control"
+                        value={formData.dni}
+                        onChange={handleChange}
+                        disabled={isDniDisabled || loading}
+                    />
+                </div>
+                <div className="form-group">
+                    <label htmlFor="phone_number">Teléfono</label>
+                    <input
+                        type="number"
+                        id="phone_number"
+                        name="phone_number"
+                        className="form-control"
+                        value={formData.phone_number}
+                        onChange={handleChange}
+                        disabled={loading}
+                    />
+                </div>
+                <div className="form-group">
+                    <label htmlFor="prioridad">
+                        ¿Tiene alguna discapacidad?
+                    </label>
+                    <input
+                        type="checkbox"
+                        id="prioridad"
+                        name="prioridad"
+                        checked={formData.prioridad}
+                        onChange={handleChange}
+                        disabled={loading}
+                    />
+                </div>
+                <div className="form-actions">
+                    <button className="btn btn-secondary" onClick={handleCancel}>
+                        Cancelar
+                    </button>
+                    <button type="submit" className="btn btn-primary" disabled={loading}>
+                        {loading ? "Guardando..." : "Registrarme y Pedir ticket"}
+                    </button>
+                </div>
+            </form>
+        </div>
+    )
+}
+
+export default RegisterTicketRequest
