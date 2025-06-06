@@ -28,7 +28,6 @@ const NormalTicketRequest = () => {
     } else if (result === "user_not_found") {
       setShowOptions(true)
     }
-    // No necesitas manejar "invalid_dni" ni "error" aquí, ya que el error se muestra automáticamente
   }
 
   const handleGuest = () => {
