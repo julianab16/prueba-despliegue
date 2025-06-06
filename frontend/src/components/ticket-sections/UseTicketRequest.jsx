@@ -1,10 +1,14 @@
 import { useState } from "react"
-import { api } from "../../services/api"
+import { userService, ticketService } from "../../services/api"
 
 export function useTicketRequest() {
   const [error, setError] = useState("")
   const [success, setSuccess] = useState("")
   const [loading, setLoading] = useState(false)
+  const [formData, setFormData] = useState({
+    dni: "",
+    prioridad: false,
+  })
 
   // Cambia el valor de retorno cuando el usuario no existe
   const pedirTicket = async ({ dni, prioridad }) => {
@@ -17,25 +21,25 @@ export function useTicketRequest() {
         setLoading(false)
         return "invalid_dni"
       }
-      const userRes = await api.get(`/api/users/by_dni/?dni=${dni}`)
+      const userRes = await userService.getByDni(dni)
       const user = userRes.data[0]
+      console.log("Usuario encontrado:", user)
       if (!user) {
         setError("Usuario no encontrado")
         setLoading(false)
         return "user_not_found"
       }
-      await api.post("/api/tickets/", {
-        title: "Ticket automático",
-        description: "Ticket generado desde la web",
-        user: user.id,
-        priority: prioridad ? "high" : "low",
-        content: "Default content",
+      await  ticketService.create({
+              user: user.id,
+              priority: prioridad ? "high" : "low",
+              status: 'open',           // o el valor por defecto que acepte tu modelo
       })
       setSuccess("Ticket creado exitosamente")
       setLoading(false)
       return "success"
     } catch (err) {
       setError("Error al crear el ticket")
+      console.error(err.response ? err.response.data : err)
       setLoading(false)
       return "error"
     }

@@ -6,5 +6,5 @@ class TicketSerializer(serializers.ModelSerializer):
         model = Ticket
         fields = [
             'id_ticket','status', 'priority', 
-            'created_at', 'updated_at', 'user', 'assigned_to'
+            'created_at', 'updated_at', 'user'
         ]
