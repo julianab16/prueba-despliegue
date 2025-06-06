@@ -2,9 +2,11 @@
 
 import { useState } from "react"
 import { useNavigate, Link, useLocation } from "react-router-dom"
+import { useTicketRequest } from "./UseTicketRequest"
 import { userService } from "../../services/api"
 
-const ClientRegisterForm = () => {
+
+const RegisterTicketRequest = () => {
     const navigate = useNavigate()
     const location = useLocation()
     const searchParams = new URLSearchParams(location.search)
@@ -23,6 +25,7 @@ const ClientRegisterForm = () => {
 
     const [loading, setLoading] = useState(false)
     const [error, setError] = useState("")
+    const { pedirTicket, error: ticketError, success: ticketSuccess } = useTicketRequest()
 
     const isDniDisabled = !!dniFromQuery
 
@@ -42,6 +45,8 @@ const ClientRegisterForm = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault()
+        setError("")
+
         const validationError = validateForm()
         if (validationError) {
             setError(validationError)
@@ -49,12 +54,20 @@ const ClientRegisterForm = () => {
         }
 
         setLoading(true)
-        setError("")
 
         try {
             const dataToSubmit = { ...formData }
             await userService.create(dataToSubmit)
-            navigate("/users")
+            // Pedir ticket automáticamente después de registrar
+            const ok = await pedirTicket({
+                dni: dataToSubmit.dni,
+                prioridad: dataToSubmit.prioridad,
+            })
+            if (ok) {
+                navigate("/ticket-req")
+            } else {
+                setError(ticketError || "Error al pedir el ticket")
+            }
         } catch (err) {
             let errorMessage = "Error al guardar el usuario"
             if (err.response && err.response.data) {
@@ -76,6 +89,7 @@ const ClientRegisterForm = () => {
     }
 
     const handleCancel = () => {
+        e.preventDefault()
         navigate("/ticket-req")
     }
 
@@ -182,4 +196,4 @@ const ClientRegisterForm = () => {
     )
 }
 
-export default ClientRegisterForm
+export default RegisterTicketRequest

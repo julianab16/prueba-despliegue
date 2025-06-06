@@ -1,15 +1,14 @@
 import React, { useState } from "react"
-import { api } from "../../services/api"
+import { useTicketRequest } from "./UseTicketRequest"
+import { userService } from "../../services/api"
 
 
-const TicketRequest = () => {
+const NormalTicketRequest = () => {
   const [formData, setFormData] = useState({
     dni: "",
     prioridad: false,
   })
-  const [error, setError] = useState("")
-  const [success, setSuccess] = useState("")
-  const [loading, setLoading] = useState(false)
+  const { pedirTicket, error, success, loading, setError, setSuccess } = useTicketRequest()
   const [showOptions, setShowOptions] = useState(false)
 
   const handleChange = (e) => {
@@ -20,51 +19,16 @@ const TicketRequest = () => {
     }))
   }
 
-  const validateForm = () => {
-    // Usa la misma regex que el modelo de User en el backend
-    if (!/^\d{7,10}$/.test(formData.dni)) {
-      return "No es un número de documento válido"
-    }
-    return null
-  }
-
   const handleSubmit = async (e) => {
     e.preventDefault()
-    setError("")
-    setSuccess("")
-
-    const validationError = validateForm()
-    if (validationError) {
-      setError(validationError)
-      return
-    }
-
-    setLoading(true)
-    try {
-      // 1. Buscar usuario por cédula
-      const userRes = await api.get(`/api/users/by_dni/?dni=${formData.dni}`)
-      const user = userRes.data[0]
-      if (!user) {
-        setError("Usuario no encontrado")
-        setLoading(false)
-        setShowOptions(true) // Mostrar opciones si no se encuentra el usuario
-        return
-      }
-      // 2. Crear ticket
-      await api.post("/api/tickets/", {
-        title: "Ticket automático",
-        description: "Ticket generado desde la web",
-        user: user.id,
-        priority: formData.prioridad ? "high" : "low", // <-- aquí el cambio
-        content: "Default content",
-      })
-      setSuccess("Ticket creado exitosamente")
+    const result = await pedirTicket(formData)
+    if (result === "success") {
       setFormData({ dni: "", prioridad: false })
-    } catch (err) {
-      setError("Error al crear el ticket")
-    } finally {
-      setLoading(false)
+      setShowOptions(false)
+    } else if (result === "user_not_found") {
+      setShowOptions(true)
     }
+    // No necesitas manejar "invalid_dni" ni "error" aquí, ya que el error se muestra automáticamente
   }
 
   const handleGuest = () => {
@@ -139,4 +103,4 @@ const TicketRequest = () => {
   )
 }
 
-export default TicketRequest
+export default NormalTicketRequest

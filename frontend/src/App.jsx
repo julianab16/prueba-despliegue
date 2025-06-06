@@ -7,8 +7,8 @@ import TicketManagement from "./components/TicketManagement"
 import Navbar from "./components/Navbar"
 import { AuthProvider } from "./context/AuthContext"
 import ProtectedRoute from "./components/ProtectedRoute"
-import TicketRequest from "./components/ticket-sections/TicketRequest"
-import ClientRegisterForm from "./components/ticket-sections/ClientRegisterForm"
+import NormalTicketRequest from "./components/ticket-sections/NormalTicketRequest"
+import RegisterTicketRequest from "./components/ticket-sections/RegisterTicketRequest"
 
 function AppContent() {
   const location = useLocation()
@@ -20,8 +20,8 @@ function AppContent() {
       <div className="content">
         <Routes>
           <Route path="/login" element={<Login />} />
-          <Route path="/ticket-req" element={<TicketRequest />} />
-          <Route path="/ticket-req/new-user" element={<ClientRegisterForm />} />
+          <Route path="/ticket-req" element={<NormalTicketRequest />} />
+          <Route path="/ticket-req/new-user" element={<RegisterTicketRequest />} />
           
           <Route
             path="/"
