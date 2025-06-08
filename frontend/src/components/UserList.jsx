@@ -3,6 +3,10 @@
 import { useState, useEffect } from "react"
 import { Link } from "react-router-dom"
 import { userService } from "../services/api"
+import { BsPencilSquare, BsTrash } from "react-icons/bs";
+import { MdEdit,MdDelete} from "react-icons/md";
+import { FaEdit, FaTrash } from "react-icons/fa";
+
 
 const UserList = () => {
   const [users, setUsers] = useState([])
@@ -58,7 +62,7 @@ const UserList = () => {
         className="header-actions"
         style={{ display: "flex", justifyContent: "space-between", marginBottom: "1rem" }}
       >
-        <h2>Lista de Usuarios</h2>
+        <h2 style={{ color: "black" }}>Lista de Usuarios</h2>
         <Link to="/users/new" className="btn btn-primary">
           Nuevo Usuario
         </Link>
@@ -102,11 +106,13 @@ const UserList = () => {
                   <td>{user.phone_number}</td>
                   <td>{user.role}</td>
                   <td className="action-buttons">
-                    <Link to={`/users/edit/${user.id}`} className="btn btn-secondary">
-                      Editar
+                    <Link to={`/users/edit/${user.id}`} className="icon-button edit-icon" title="Editar">
+                      <BsPencilSquare/>
                     </Link>
-                    <button onClick={() => handleDelete(user.id)} className="btn btn-danger">
-                      Eliminar
+                    <button
+                    type="button"
+                    onClick={() => handleDelete(user.id)} className="icon-button delete-icon" title="Eliminar">
+                      <MdDelete/>
                     </button>
                   </td>
                 </tr>

@@ -86,6 +86,7 @@ body {
 .btn-primary {
   background-color: #4A90E2;
   color: white;
+  text-decoration: none;
 }
 
 .btn-primary:hover {
@@ -106,6 +107,7 @@ body {
   color: white;
   min-width: 160px;
   min-height: 50px;
+  text-decoration: none;
 }
 
 .btn-secondary:hover {
@@ -136,29 +138,91 @@ body {
 /* Table styles */
 .table-container {
   width: 100%;
-  overflow-x: auto;
+  overflow-x: hidden;
 }
 
 table {
   width: 100%;
   border-collapse: collapse;
+  background-color: #ffffff;
   margin-top: 1rem;
+  color:#1a1a1a
 }
 
 th,
 td {
-  padding: 0.75rem;
+  padding: 0.70rem;
   text-align: left;
-  border-bottom: 1px solid #444;
+  text-overflow: ellipsis; 
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+tbody tr {
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1); 
+}
+
+tbody tr:hover {
+  background-color: #f5f5f5; 
 }
 
 th {
-  background-color: #1a1a1a;
+  background-color: #c9e7ff;
+  color: #1a1a1a;
+}
+
+td:last-child a:first-child {
+  background-color: #4A90E2; 
+  color: #ffffff;
+}
+
+td:last-child a:first-child:hover {
+  background-color: #357abd;
 }
 
 .action-buttons {
   display: flex;
+  justify-content: center;  
   gap: 0.5rem;
+}
+
+.action-buttons .btn {
+  min-width: 80px;
+  max-width: 100px;
+  min-height: 36px;
+  padding: 6px 12px;
+  font-size: 0.9rem;
+}
+
+.icon-button {
+  border: none;
+  cursor: pointer;
+  border-radius: 18%;
+  width: 35px;
+  height: 35px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.3rem;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.icon-button.edit-icon {
+  background-color: #55616e; /* fondo azul */
+  color: #ffffff;            /* ícono blanco */
+}
+
+.icon-button.edit-icon:hover {
+  background-color: #357abd;
+}
+
+.icon-button.delete-icon {
+  background-color: #e74c3c; /* fondo rojo */
+  color: #ffffff;            /* ícono blanco */
+}
+
+.icon-button.delete-icon:hover {
+  background-color: #c0392b;
 }
 
 /* Dashboard */
@@ -401,64 +465,64 @@ th {
   height: 100%;
 }
   
-    .attention-points-panel {
-      flex: 3; /* Ocupa 3/4 del espacio */
-      background-color: var(--primary-color);
-      padding: 1rem;
-      border-radius: 8px;
-      color: white;
-      display: flex;
-      flex-direction: column;
-    }
+.attention-points-panel {
+  flex: 3; /* Ocupa 3/4 del espacio */
+  background-color: var(--primary-color);
+  padding: 1rem;
+  border-radius: 8px;
+  color: white;
+  display: flex;
+  flex-direction: column;
+}
     
-    .attention-points-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); /* Ajusta el tamaño mínimo de los elementos */
-      gap: 1rem;
-      flex-grow: 1; /* Permite que la grilla ocupe todo el espacio disponible */
-    }
+.attention-points-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); /* Ajusta el tamaño mínimo de los elementos */
+  gap: 1rem;
+  flex-grow: 1; /* Permite que la grilla ocupe todo el espacio disponible */
+}
     
-    .attention-point {
-      background-color: #333;
-      padding: 1rem;
-      text-align: center;
-      border-radius: 4px;
-      color: white;
-      font-weight: bold;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      height: 100px; /* Altura fija para los puntos de atención */
-    }
+.attention-point {
+  background-color: #333;
+  padding: 1rem;
+  text-align: center;
+  border-radius: 4px;
+  color: white;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100px; /* Altura fija para los puntos de atención */
+}
     
-    .tickets-panel {
-      flex: 1; /* Ocupa 1/4 del espacio */
-      background-color: var(--primary-color);
-      padding: 1rem;
-      border-radius: 8px;
-      color: white;
-    }
+.tickets-panel {
+  flex: 1; /* Ocupa 1/4 del espacio */
+  background-color: var(--primary-color);
+  padding: 1rem;
+  border-radius: 8px;
+  color: white;
+}
     
-    .tickets-list {
-      list-style: none;
-      padding: 0;
-      margin: 0;
-    }
+.tickets-list {
+  list-style: none;
+  padding: 0;
+  margin: 1rem 0;
+}
     
-    .ticket-item {
-      background-color: #333;
-      padding: 0.75rem;
-      margin-bottom: 0.5rem;
-      border-radius: 4px;
-      color: white;
-    }
-
-    .attention-points-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 1rem;
+.ticket-item {
+  background-color: #555;
+  padding: 0.65rem;
+  margin-bottom: 0.5rem;
+  border-radius: 4px;
+  color: white;
   }
+
+.attention-points-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+}
 
 /* Responsive */
 @media (max-width: 700px) {
