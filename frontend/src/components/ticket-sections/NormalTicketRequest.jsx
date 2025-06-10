@@ -1,15 +1,15 @@
 import React, { useState } from "react"
 import { useTicketRequest } from "./UseTicketRequest"
-import { userService } from "../../services/api"
-
 
 const NormalTicketRequest = () => {
   const [formData, setFormData] = useState({
     dni: "",
     prioridad: false,
   })
-  const { pedirTicket, error, success, loading, setError, setSuccess } = useTicketRequest()
+  const {pedirTicket, error, loading} = useTicketRequest()
   const [showOptions, setShowOptions] = useState(false)
+  const [ticketInfo, setTicketInfo] = useState(null)
+
 
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target
@@ -22,17 +22,19 @@ const NormalTicketRequest = () => {
   const handleSubmit = async (e) => {
     e.preventDefault()
     const result = await pedirTicket(formData)
-    if (result === "success") {
+    if (result && result.status === "success") {
+      setTicketInfo({
+        nombre: result.user.first_name,
+        apellido: result.user.last_name,
+        prioridad: result.ticket.priority,
+        id_ticket: result.ticket.id_ticket,
+        email: result.user.email,
+      })
       setFormData({ dni: "", prioridad: false })
       setShowOptions(false)
     } else if (result === "user_not_found") {
       setShowOptions(true)
     }
-  }
-
-  const handleGuest = () => {
-    alert(`Ticket solicitado como invitado para la cédula: ${formData.dni}`)
-    setShowOptions(false)
   }
 
   const handleRegister = () => {
@@ -41,10 +43,6 @@ const NormalTicketRequest = () => {
 
   const handleCorrectDni = () => {
     setShowOptions(false)
-    setFormData((prev) => ({
-      ...prev,
-      dni: formData.dni,
-    }))
   }
 
   return (
@@ -52,8 +50,24 @@ const NormalTicketRequest = () => {
       <div className="form-container">
         <h2 className="form-title">Solicitar Ticket</h2>
         {error && <div className="alert alert-danger">{error}</div>}
-        {success && <div className="alert alert-success">{success}</div>}
-        {!showOptions ? (
+        {ticketInfo ? (
+          <div className="ticket-success-message">
+            <p>
+              Bienvenido <strong>{ticketInfo.nombre} {ticketInfo.apellido}</strong>, se ha solicitado un ticket<strong>{ticketInfo.prioridad === "high" ? " prioritario" : ""}</strong>.
+            </p>
+            <p>
+              <strong>ID de su ticket:</strong> {ticketInfo.id_ticket}
+            </p>
+            <p>
+              Puede realizar seguimiento de la cola de tickets ingresando al correo que le fue enviado{ticketInfo.email ? ` (${ticketInfo.email})` : ""}.
+            </p>
+            <div className="form-actions"> 
+              <button className="btn btn-primary" onClick={() => setTicketInfo(null)}>
+                Entendido
+              </button>
+            </div>
+          </div>
+        ) : !showOptions ? (
         <form onSubmit={handleSubmit}>
           <div className="form-group">
             <label htmlFor="dni">Cédula</label>
@@ -81,20 +95,13 @@ const NormalTicketRequest = () => {
               La cédula <strong>{formData.dni}</strong> no está registrada, regístrate para poder pedir un ticket
             </p>
 
-            <div className="form-actions"> 
-
-              <button className="btn btn-secondary" onClick={handleGuest}>
-                Pedir ticket como invitado
-              </button>
-
-              <button className="btn btn-secondary" onClick={handleCorrectDni}>
-                Corregir cédula
-              </button>
-
-            </div>
             <button className="btn btn-primary" onClick={handleRegister}>
               Registrarme
-            </button>            
+            </button>    
+
+            <button className="btn btn-secondary" onClick={handleCorrectDni}>
+              Corregir cédula
+            </button>        
           </div>
         )}
       </div>

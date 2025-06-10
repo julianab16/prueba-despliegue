@@ -156,33 +156,34 @@ const UserForm = () => {
             disabled={loading}
           />
         </div>
+        <div className="form-row"> 
+          <div className="form-group">
+            <label htmlFor="first_name">Nombre</label>
+            <input
+              type="text"
+              id="first_name"
+              name="first_name"
+              className="form-control"
+              value={formData.first_name}
+              onChange={handleChange}
+              disabled={loading}
+            />
+          </div>
 
-        <div className="form-group">
-          <label htmlFor="first_name">Nombre</label>
-          <input
-            type="text"
-            id="first_name"
-            name="first_name"
-            className="form-control"
-            value={formData.first_name}
-            onChange={handleChange}
-            disabled={loading}
-          />
+          <div className="form-group">
+            <label htmlFor="last_name">Apellido</label>
+            <input
+              type="text"
+              id="last_name"
+              name="last_name"
+              className="form-control"
+              value={formData.last_name}
+              onChange={handleChange}
+              disabled={loading}
+            />
+          </div>
         </div>
-
-        <div className="form-group">
-          <label htmlFor="last_name">Apellido</label>
-          <input
-            type="text"
-            id="last_name"
-            name="last_name"
-            className="form-control"
-            value={formData.last_name}
-            onChange={handleChange}
-            disabled={loading}
-          />
-        </div>
-
+        
         <div className="form-group">
           <label htmlFor="email">Email</label>
           <input
@@ -264,6 +265,7 @@ const UserForm = () => {
               </label>
               <input
                 type="checkbox"
+                className="big-checkbox"
                 id="prioridad"
                 name="prioridad"
                 checked={formData.prioridad}

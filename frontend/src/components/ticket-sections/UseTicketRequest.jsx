@@ -29,14 +29,18 @@ export function useTicketRequest() {
         setLoading(false)
         return "user_not_found"
       }
-      await  ticketService.create({
+      const ticketRes = await ticketService.create({
               user: user.id,
               priority: prioridad ? "high" : "low",
               status: 'open',           // o el valor por defecto que acepte tu modelo
       })
       setSuccess("Ticket creado exitosamente")
       setLoading(false)
-      return "success"
+      return {
+        status: "success",
+        user,
+        ticket: ticketRes.data,
+      }
     } catch (err) {
       setError("Error al crear el ticket")
       console.error(err.response ? err.response.data : err)

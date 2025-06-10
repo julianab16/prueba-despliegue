@@ -38,7 +38,11 @@ const RegisterTicketRequest = () => {
     }
 
     const validateForm = () => {
+
+        {/* BORRAR ESTO ↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓ */}
         if (!formData.username) return "El nombre de usuario es obligatorio"
+        {/* ↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑ */}
+
         if (!formData.email) return "El email es obligatorio"
         return null
     }
@@ -89,7 +93,6 @@ const RegisterTicketRequest = () => {
     }
 
     const handleCancel = () => {
-        e.preventDefault()
         navigate("/ticket-req")
     }
 
@@ -98,6 +101,8 @@ const RegisterTicketRequest = () => {
             <h2 className="form-title">Registro</h2>
             {error && <div className="alert alert-danger">{error}</div>}
             <form onSubmit={handleSubmit}>
+                
+                {/* BORRAR ESTO ↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓ */}
                 <div className="form-group">
                     <label htmlFor="username">Usuario</label>
                     <input
@@ -110,9 +115,12 @@ const RegisterTicketRequest = () => {
                         disabled={loading}
                     />
                 </div>
-                <div className="form-group">
-                    <label htmlFor="first_name">Nombre</label>
-                    <input
+                {/* ↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑ */}
+
+                <div className="form-row">
+                    <div className="form-group">
+                        <label htmlFor="first_name">Nombre</label>
+                        <input
                         type="text"
                         id="first_name"
                         name="first_name"
@@ -120,11 +128,11 @@ const RegisterTicketRequest = () => {
                         value={formData.first_name}
                         onChange={handleChange}
                         disabled={loading}
-                    />
-                </div>
-                <div className="form-group">
-                    <label htmlFor="last_name">Apellido</label>
-                    <input
+                        />
+                    </div>
+                    <div className="form-group">
+                        <label htmlFor="last_name">Apellido</label>
+                        <input
                         type="text"
                         id="last_name"
                         name="last_name"
@@ -132,7 +140,8 @@ const RegisterTicketRequest = () => {
                         value={formData.last_name}
                         onChange={handleChange}
                         disabled={loading}
-                    />
+                        />
+                    </div>
                 </div>
                 <div className="form-group">
                     <label htmlFor="email">Email</label>
@@ -142,6 +151,18 @@ const RegisterTicketRequest = () => {
                         name="email"
                         className="form-control"
                         value={formData.email}
+                        onChange={handleChange}
+                        disabled={loading}
+                    />
+                </div>
+                <div className="form-group">
+                    <label htmlFor="phone_number">Teléfono</label>
+                    <input
+                        type="number"
+                        id="phone_number"
+                        name="phone_number"
+                        className="form-control"
+                        value={formData.phone_number}
                         onChange={handleChange}
                         disabled={loading}
                     />
@@ -159,23 +180,12 @@ const RegisterTicketRequest = () => {
                     />
                 </div>
                 <div className="form-group">
-                    <label htmlFor="phone_number">Teléfono</label>
-                    <input
-                        type="number"
-                        id="phone_number"
-                        name="phone_number"
-                        className="form-control"
-                        value={formData.phone_number}
-                        onChange={handleChange}
-                        disabled={loading}
-                    />
-                </div>
-                <div className="form-group">
                     <label htmlFor="prioridad">
                         ¿Tiene alguna discapacidad?
                     </label>
                     <input
                         type="checkbox"
+                        className="big-checkbox"
                         id="prioridad"
                         name="prioridad"
                         checked={formData.prioridad}

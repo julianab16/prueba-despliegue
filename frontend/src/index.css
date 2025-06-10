@@ -286,6 +286,15 @@ td:last-child a:first-child:hover {
   color: #ffffff;
 }
 
+.form-row {
+  display: flex;
+  gap: 1rem;
+}
+
+.form-row .form-group {
+  flex: 1;
+}
+
 .form-group {
   margin-bottom: 0.5rem;
 }
@@ -319,6 +328,14 @@ td:last-child a:first-child:hover {
   justify-content: center;
   gap: 1rem;
   margin-top: 2rem;
+}
+
+.big-checkbox {
+  width: 14px;
+  height: 14px;
+  transform: scale(1.5);
+  accent-color: #4A90E2; 
+  margin-left: 0.3rem; /* Espacio entre el checkbox y el texto */
 }
 
 /* Modern login */
