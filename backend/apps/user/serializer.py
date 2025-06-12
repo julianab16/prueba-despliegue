@@ -1,30 +1,8 @@
 from rest_framework import serializers
 from .models import User
-from django.db import models
-""""
-class UserSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = User
-        fields = [
-            'id', 'username', 'first_name', 'last_name', 'email', 
-            'dni', 'phone_number', 'role', 'prioridad', 'password'
-        ]
-        extra_kwargs = {'password': {'write_only': True}}
-
-        """
-
-from django.contrib.auth import get_user_model, authenticate
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 
 
-# class UserSerializer(serializers.ModelSerializer):
-#     class Meta:
-#         model = User
-#         fields = [
-#             'id', 'username', 'first_name', 'last_name', 'email', 
-#             'dni', 'phone_number', 'role', 'prioridad', 'password'
-#         ]
-#         extra_kwargs = {'password': {'write_only': True}}
 
 class UserSerializer(serializers.ModelSerializer):
     password = serializers.CharField(write_only=True, required=False)  # Hacer password opcional
@@ -52,11 +30,6 @@ class UserSerializer(serializers.ModelSerializer):
         # Si no hay contraseña para roles que no sean 'CLIENTE', se debe lanzar una excepción
         if validated_data.get('role') != 'CLIENTE' and not password:
             raise serializers.ValidationError({'password': 'La contraseña es obligatoria para este rol.'})
-
-         # Si el rol es CLIENTE, asignar el DNI como contraseña
-        if validated_data.get('role') == 'CLIENTE' and 'dni' in validated_data:
-            password = str(validated_data['dni'])
-            print(f"Asignando contraseña: {password}") 
 
         # Crear el usuario
         user = User(**validated_data)

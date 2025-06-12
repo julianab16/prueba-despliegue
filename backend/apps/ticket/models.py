@@ -27,7 +27,7 @@ class Ticket(models.Model):
         db_table = "ticket"
         
     def __str__(self):
-        return self.user.username
+        return f"Ticket {self.id_ticket}"
     
     def save(self, *args, **kwargs):
         if self.user.role != 'CLIENTE':

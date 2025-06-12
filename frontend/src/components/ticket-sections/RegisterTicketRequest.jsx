@@ -39,10 +39,6 @@ const RegisterTicketRequest = () => {
 
     const validateForm = () => {
 
-        {/* BORRAR ESTO ↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓ */}
-        if (!formData.username) return "El nombre de usuario es obligatorio"
-        {/* ↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑ */}
-
         if (!formData.email) return "El email es obligatorio"
         return null
     }
@@ -102,20 +98,7 @@ const RegisterTicketRequest = () => {
             {error && <div className="alert alert-danger">{error}</div>}
             <form onSubmit={handleSubmit}>
                 
-                {/* BORRAR ESTO ↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓ */}
-                <div className="form-group">
-                    <label htmlFor="username">Usuario</label>
-                    <input
-                        type="text"
-                        id="username"
-                        name="username"
-                        className="form-control"
-                        value={formData.username}
-                        onChange={handleChange}
-                        disabled={loading}
-                    />
-                </div>
-                {/* ↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑ */}
+        
 
                 <div className="form-row">
                     <div className="form-group">
