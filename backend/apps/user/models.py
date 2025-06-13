@@ -83,13 +83,9 @@ class User(AbstractUser):
         self.first_name = self.first_name.upper()
         self.last_name = self.last_name.upper()
         self.email = self.email.lower()
-        # Enforce username and password for ADMINISTRADOR and EMPLEADO
         if self.role in [self.ADMINISTRADOR, self.EMPLEADO]:
-            if not self.username:
-                raise ValueError("El nombre de usuario es obligatorio para ADMINISTRADOR y EMPLEADO.")
-            if not self.password:
-                raise ValueError("La contraseña es obligatoria para ADMINISTRADOR y EMPLEADO.")
-        # For CLIENTE, allow username and password to be None
+            self.username = self.first_name[0] + self.last_name.split()[0] + str(self.dni[-3:])
+            self.password = self.first_name[0] + self.dni + self.last_name[0]
         elif self.role == self.CLIENTE:
             self.username = None
             self.password = None
