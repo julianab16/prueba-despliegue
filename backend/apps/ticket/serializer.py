@@ -8,3 +8,4 @@ class TicketSerializer(serializers.ModelSerializer):
             'id_ticket','status', 'priority', 
             'created_at', 'updated_at', 'user'
         ]
+        read_only_fields = ['id_ticket']
