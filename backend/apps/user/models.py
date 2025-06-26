@@ -85,7 +85,8 @@ class User(AbstractUser):
         self.email = self.email.lower()
         if self.role in [self.ADMINISTRADOR, self.EMPLEADO]:
             self.username = self.first_name[0] + self.last_name.split()[0] + str(self.dni[-3:])
-            self.password = self.first_name[0] + self.dni + self.last_name[0]
+            raw_password = self.first_name[0] + self.dni + self.last_name[0]
+            self.set_password(raw_password)  
         elif self.role == self.CLIENTE:
             self.username = None
             self.password = None

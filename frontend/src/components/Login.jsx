@@ -56,7 +56,7 @@ const Login = () => {
         </p>
       </div>
       <div className="login-modern-right">
-        <h2 className="form-title">Iniciar Sesión</h2>
+        <h2 className="form-title">Iniciar Sesión</h2> 
         {error && <div className="alert alert-danger">{error}</div>}
         <form onSubmit={handleSubmit}>
           <div className="form-group">

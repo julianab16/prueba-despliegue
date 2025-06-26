@@ -9,6 +9,7 @@ import { AuthProvider } from "./context/AuthContext"
 import ProtectedRoute from "./components/ProtectedRoute"
 import NormalTicketRequest from "./components/ticket-sections/NormalTicketRequest"
 import RegisterTicketRequest from "./components/ticket-sections/RegisterTicketRequest"
+import AttentionPointList from "./components/AttentionPointList"
 
 function AppContent() {
   const location = useLocation()
@@ -68,6 +69,14 @@ function AppContent() {
             element={
               <ProtectedRoute>
                 <UserForm />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/attention-points"
+            element={
+              <ProtectedRoute>
+                <AttentionPointList />
               </ProtectedRoute>
             }
           />
