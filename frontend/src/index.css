@@ -572,7 +572,7 @@ td:last-child a:first-child:hover {
   gap: 1rem;
   height: 100%;
 }
-  
+
 .attention-points-panel {
   flex: 3; /* Ocupa 3/4 del espacio */
   background-color: var(--primary-color);
@@ -582,14 +582,14 @@ td:last-child a:first-child:hover {
   display: flex;
   flex-direction: column;
 }
-    
+
 .attention-points-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); /* Ajusta el tamaño mínimo de los elementos */
   gap: 1rem;
   flex-grow: 1; /* Permite que la grilla ocupe todo el espacio disponible */
 }
-    
+
 .attention-point {
   background-color: #333;
   padding: 1rem;
@@ -602,7 +602,7 @@ td:last-child a:first-child:hover {
   justify-content: center;
   height: 100px; /* Altura fija para los puntos de atención */
 }
-    
+
 .tickets-panel {
   flex: 1; /* Ocupa 1/4 del espacio */
   background-color: var(--primary-color);
@@ -610,26 +610,41 @@ td:last-child a:first-child:hover {
   border-radius: 8px;
   color: white;
 }
-    
+
 .tickets-list {
   list-style: none;
   padding: 0;
   margin: 1rem 0;
 }
-    
+
 .ticket-item {
-  background-color: #555;
-  padding: 0.65rem;
+  background-color: #333;
+  padding: 0.75rem;
   margin-bottom: 0.5rem;
   border-radius: 4px;
   color: white;
-  }
+}
 
 .attention-points-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
   margin-bottom: 1rem;
+}
+
+.ticket-head {
+  border: 2px solid #4A90E2;
+  border-radius: 8px;
+  background: #e3f0ff;
+  color: #222;
+  font-weight: bold;
+  box-shadow: 0 0 8px #4A90E2;
+}
+
+.attention-point-dragover {
+  background-color: #4A90E2 !important;
+  color: #fff !important;
+  border: 2px dashed #fff;
 }
 
 /* Responsive */
