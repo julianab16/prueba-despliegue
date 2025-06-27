@@ -70,9 +70,6 @@ const UserForm = () => {
     if (formData.role !== "CLIENTE" && !formData.password) {
       return "La contraseña es obligatoria para administradores y empleados"
     }
-    if (formData.role !== "CLIENTE" && !formData.password) {
-      return "La contraseña es obligatoria para administradores y empleados"
-    }
 
     return null
   }
@@ -96,6 +93,7 @@ const UserForm = () => {
       // Si el rol es CLIENTE, eliminar la contraseña del objeto
       if (dataToSubmit.role === "CLIENTE") {
         delete dataToSubmit.password
+        delete dataToSubmit.username
       }
       // If editing and password is empty, remove it from the request
       if (isEditMode && !dataToSubmit.password) {
@@ -156,34 +154,33 @@ const UserForm = () => {
             disabled={loading}
           />
         </div>
-        <div className="form-row"> 
-          <div className="form-group">
-            <label htmlFor="first_name">Nombre</label>
-            <input
-              type="text"
-              id="first_name"
-              name="first_name"
-              className="form-control"
-              value={formData.first_name}
-              onChange={handleChange}
-              disabled={loading}
-            />
-          </div>
 
-          <div className="form-group">
-            <label htmlFor="last_name">Apellido</label>
-            <input
-              type="text"
-              id="last_name"
-              name="last_name"
-              className="form-control"
-              value={formData.last_name}
-              onChange={handleChange}
-              disabled={loading}
-            />
-          </div>
+        <div className="form-group">
+          <label htmlFor="first_name">Nombre</label>
+          <input
+            type="text"
+            id="first_name"
+            name="first_name"
+            className="form-control"
+            value={formData.first_name}
+            onChange={handleChange}
+            disabled={loading}
+          />
         </div>
-        
+
+        <div className="form-group">
+          <label htmlFor="last_name">Apellido</label>
+          <input
+            type="text"
+            id="last_name"
+            name="last_name"
+            className="form-control"
+            value={formData.last_name}
+            onChange={handleChange}
+            disabled={loading}
+          />
+        </div>
+
         <div className="form-group">
           <label htmlFor="email">Email</label>
           <input
@@ -257,6 +254,7 @@ const UserForm = () => {
             />
           </div>
         )}
+        
         {/* Casilla de discapacidad solo Clientes */}
         {formData.role === "CLIENTE" && (
             <div className="form-group">
@@ -265,7 +263,6 @@ const UserForm = () => {
               </label>
               <input
                 type="checkbox"
-                className="big-checkbox"
                 id="prioridad"
                 name="prioridad"
                 checked={formData.prioridad}

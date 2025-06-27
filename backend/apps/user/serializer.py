@@ -53,11 +53,6 @@ class UserSerializer(serializers.ModelSerializer):
         if validated_data.get('role') != 'CLIENTE' and not password:
             raise serializers.ValidationError({'password': 'La contraseña es obligatoria para este rol.'})
 
-         # Si el rol es CLIENTE, asignar el DNI como contraseña
-        if validated_data.get('role') == 'CLIENTE' and 'dni' in validated_data:
-            password = str(validated_data['dni'])
-            print(f"Asignando contraseña: {password}") 
-
         # Crear el usuario
         user = User(**validated_data)
         user.is_staff = is_staff
