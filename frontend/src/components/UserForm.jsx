@@ -10,13 +10,13 @@ const UserForm = () => {
   const isEditMode = !!id
 
   const [formData, setFormData] = useState({
-    username: "",
+    //username: "",
     first_name: "",
     last_name: "",
     email: "",
     dni: "",
     phone_number: "",
-    password: "",
+    //password: "",
     is_staff: false,
     role: "CLIENTE", // Valor predeterminado para el rol
     prioridad: false,
@@ -59,20 +59,20 @@ const UserForm = () => {
     setFormData((prev) => ({
       ...prev,
       [name]: type === "checkbox" ? checked : value,
-      [name]: type === "checkbox" ? checked : value,
+      // [name]: type === "checkbox" ? checked : value,
     }))
   }
 
   const validateForm = () => {
     // Basic validation
-    if (!formData.username) return "El nombre de usuario es obligatorio"
+    // if (!formData.username) return "El nombre de usuario es obligatorio"
     if (!formData.email) return "El email es obligatorio"
-    if (formData.role !== "CLIENTE" && !formData.password) {
-      return "La contraseña es obligatoria para administradores y empleados"
-    }
-    if (formData.role !== "CLIENTE" && !formData.password) {
-      return "La contraseña es obligatoria para administradores y empleados"
-    }
+    // if (formData.role !== "CLIENTE" && !formData.password) {
+    //   return "La contraseña es obligatoria para administradores y empleados"
+    // }
+    // if (formData.role !== "CLIENTE" && !formData.password) {
+    //   return "La contraseña es obligatoria para administradores y empleados"
+    // }
 
     return null
   }
@@ -144,19 +144,22 @@ const UserForm = () => {
       {error && <div className="alert alert-danger">{error}</div>}
 
       <form onSubmit={handleSubmit}>
-        <div className="form-group">
-          <label htmlFor="username">Usuario</label>
-          <input
-            type="text"
-            id="username"
-            name="username"
-            className="form-control"
-            value={formData.username}
-            onChange={handleChange}
-            disabled={loading}
-          />
-        </div>
-        <div className="form-row"> 
+        {isEditMode && (
+          <div className="form-group">
+            <label htmlFor="username">Usuario</label>
+            <input
+              type="text"
+              id="username"
+              name="username"
+              className="form-control"
+              value={formData.username}
+              disabled={loading}
+            />
+          </div>
+        )}
+
+
+        <div className="form-row">
           <div className="form-group">
             <label htmlFor="first_name">Nombre</label>
             <input
@@ -183,7 +186,7 @@ const UserForm = () => {
             />
           </div>
         </div>
-        
+
         <div className="form-group">
           <label htmlFor="email">Email</label>
           <input
@@ -240,12 +243,10 @@ const UserForm = () => {
           </select>
         </div>
         {/* Casilla solo clientes */}
-        {formData.role !== "CLIENTE" && (
+        {isEditMode && (
           <div className="form-group">
             <label htmlFor="password">
-              {isEditMode
-                ? "Contraseña (dejar en blanco para mantener la actual)"
-                : "Contraseña"}
+              Contraseña (dejar en blanco para mantener la actual)
             </label>
             <input
               type="password"
@@ -254,26 +255,28 @@ const UserForm = () => {
               className="form-control"
               value={formData.password}
               onChange={handleChange}
+              disabled={loading}
             />
           </div>
         )}
+
         {/* Casilla de discapacidad solo Clientes */}
         {formData.role === "CLIENTE" && (
-            <div className="form-group">
-              <label htmlFor="prioridad">
-                ¿Tiene alguna discapacidad?
-              </label>
-              <input
-                type="checkbox"
-                className="big-checkbox"
-                id="prioridad"
-                name="prioridad"
-                checked={formData.prioridad}
-                onChange={handleChange}
-                disabled={loading}
-              />
-            </div>
-          )}
+          <div className="form-group">
+            <label htmlFor="prioridad">
+              ¿Tiene alguna discapacidad?
+            </label>
+            <input
+              type="checkbox"
+              className="big-checkbox"
+              id="prioridad"
+              name="prioridad"
+              checked={formData.prioridad}
+              onChange={handleChange}
+              disabled={loading}
+            />
+          </div>
+        )}
 
         {/*
         <div className="form-group">
