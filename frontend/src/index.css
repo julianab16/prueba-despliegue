@@ -91,13 +91,13 @@ body {
 }
 
 .btn-primary {
-  background-color: #4A90E2;
+  background-color: #244d7b;
   color: white;
   text-decoration: none;
 }
 
 .btn-primary:hover {
-  background-color: #357abd;
+  background-color: #1d446a;
 }
 
 .btn-danger {
@@ -235,9 +235,9 @@ body {
 table {
   width: 100%;
   border-collapse: collapse;
-  background-color: #ffffff;
+  background-color: #232327;
   margin-top: 1rem;
-  color:#1a1a1a
+  color:#ffffff
 }
 
 th,
@@ -254,21 +254,21 @@ tbody tr {
 }
 
 tbody tr:hover {
-  background-color: #f5f5f5; 
+  background-color: #414145; 
 }
 
 th {
-  background-color: #c9e7ff;
-  color: #1a1a1a;
+  background-color: #000305;
+  color: #ffffff;
 }
 
 td:last-child a:first-child {
-  background-color: #4A90E2; 
+  background-color: #203b5b; 
   color: #ffffff;
 }
 
 td:last-child a:first-child:hover {
-  background-color: #357abd;
+  background-color: #203b5b;
 }
 
 .action-buttons {
@@ -647,6 +647,21 @@ td:last-child a:first-child:hover {
   border: 2px dashed #fff;
 }
 
+.search-bar {
+  width: 300px;
+  padding: 10px 15px;
+  border: 1px solid #c4d0d5;
+  border-radius: 12px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  font-size: 16px;
+  outline: none;
+}
+
+.search-bar:focus {
+  border-color: #2563eb;
+  box-shadow: 0 0 0 3px rgba(31, 78, 152, 0.3);
+}
+
 /* Responsive */
 @media (max-width: 700px) {
   .login-modern-wrapper {
@@ -667,4 +682,6 @@ td:last-child a:first-child:hover {
     justify-content: center;
     gap: 2rem;
   }
+
+
 }
