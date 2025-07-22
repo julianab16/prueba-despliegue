@@ -6,6 +6,7 @@ import { userService } from "../services/api"
 import { BsPencilSquare, BsTrash } from "react-icons/bs";
 import { MdEdit,MdDelete} from "react-icons/md";
 import { FaEdit, FaTrash } from "react-icons/fa";
+import '../index.css';
 
 
 const UserList = () => {
@@ -13,8 +14,13 @@ const UserList = () => {
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState("")
   const [successMessage, setSuccessMessage] = useState("")
+  const [filtro, setFiltro] = useState("")
 
   const fetchUsers = async () => {
+   const usuariosFiltrados = users.filter(user =>
+     user.first_name.toLowerCase().includes(filtro.toLowerCase()) ||
+      user.dni.toLowerCase().includes(filtro.toLowerCase())
+)
     try {
       const response = await userService.getAll()
       setUsers(response.data)
@@ -70,6 +76,12 @@ const UserList = () => {
 
       {error && <div className="alert alert-danger">{error}</div>}
       {successMessage && <div className="alert alert-success">{successMessage}</div>}
+
+<input
+  type="text"
+  placeholder="Busca por nombre o cédula"
+  className="search-bar"
+/>
 
       <div className="table-container">
         <table>
