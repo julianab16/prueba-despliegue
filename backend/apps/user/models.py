@@ -87,14 +87,12 @@ class User(AbstractUser):
         if self.role in [self.ADMINISTRADOR, self.EMPLEADO]:
             self.username = self.first_name[0] + self.last_name.split()[0] + str(self.dni[-3:])
             raw_password = self.first_name[0] + self.dni + self.last_name[0]
-<<<<<<< HEAD
             self.set_password(raw_password)  
-            print(f"Usuario creado: {self.username}")
-            print(f"Contraseña generada: {raw_password}")
-=======
+            #print(f"Usuario creado: {self.username}")
+            #print(f"Contraseña generada: {raw_password}")
+
             self.set_password(raw_password) 
             self._plain_password = raw_password  # Store temporarily for signal
->>>>>>> a46757eb9ca85cb2f95cc28f20b6d5a729c83feb
         elif self.role == self.CLIENTE:
             self.username = None
             self.password = None
