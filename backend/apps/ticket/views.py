@@ -8,7 +8,6 @@ from rest_framework.permissions import AllowAny
 import random
 import string
 
-
 class TicketListView(APIView):
     permission_classes = [AllowAny]
 
@@ -24,20 +23,10 @@ class TicketListView(APIView):
         return Response(serializer.data, status=status.HTTP_200_OK)
 
     def post(self, request):
-        data = request.data.copy()
-        # Generar un id_ticket único
-        while True:
-            letra = random.choice(string.ascii_uppercase)
-            numero = random.randint(0, 100)
-            id_ticket = f"{letra}{numero}"
-            if not Ticket.objects.filter(id_ticket=id_ticket).exists():
-                break
-        data['id_ticket'] = id_ticket
-        serializer = TicketSerializer(data=data)
+        serializer = TicketSerializer(data=request.data)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
 
         

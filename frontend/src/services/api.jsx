@@ -67,10 +67,11 @@ export const userService = {
 
 export const attentionPointService = {
   getAll: () => api.get("/api/attention-points/"), // Asegúrate de que esta ruta coincida con tu backend
+  create: (data) => api.post("/api/attention-points/", data),
+  delete: (id) => api.delete(`/api/attention-points/${id}/`),
 }
 
 export const ticketService = {
   getAll: () => api.get("/api/tickets/"),
   create: (data) => api.post("/api/tickets/", data),
-
 }

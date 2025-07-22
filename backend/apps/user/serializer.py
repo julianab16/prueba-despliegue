@@ -1,30 +1,8 @@
 from rest_framework import serializers
 from .models import User
-from django.db import models
-""""
-class UserSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = User
-        fields = [
-            'id', 'username', 'first_name', 'last_name', 'email', 
-            'dni', 'phone_number', 'role', 'prioridad', 'password'
-        ]
-        extra_kwargs = {'password': {'write_only': True}}
-
-        """
-
-from django.contrib.auth import get_user_model, authenticate
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 
 
-# class UserSerializer(serializers.ModelSerializer):
-#     class Meta:
-#         model = User
-#         fields = [
-#             'id', 'username', 'first_name', 'last_name', 'email', 
-#             'dni', 'phone_number', 'role', 'prioridad', 'password'
-#         ]
-#         extra_kwargs = {'password': {'write_only': True}}
 
 class UserSerializer(serializers.ModelSerializer):
     password = serializers.CharField(write_only=True, required=False)  # Hacer password opcional
@@ -33,13 +11,16 @@ class UserSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = User
-        fields = ['id', 'username', 'first_name', 'last_name', 'email', 
-                  'dni', 'phone_number', 'password', 'role', 'prioridad', 'is_staff']
+        fields = [
+            'id', 'username', 'first_name', 'last_name', 'email', 
+            'dni', 'phone_number', 'password', 'role', 'prioridad', 'is_staff'
+        ]
+        read_only_fields = ['username', 'password']
     
     def validate(self, data):
         # Si el usuario NO es cliente, la contraseña es obligatoria
-        if data.get('role') != 'CLIENTE' and not data.get('password'):
-            raise serializers.ValidationError({'password': 'Este campo es obligatorio.'})
+        # if data.get('role') != 'CLIENTE' and not data.get('password'):
+        #     raise serializers.ValidationError({'password': 'Este campo es obligatorio.'})
          # Validar que discapacidad solo se use con CLIENTE
         if data.get('role') != 'CLIENTE' and data.get('prioridad'):
             raise serializers.ValidationError({'prioridad': 'Solo los usuarios con rol CLIENTE pueden tener discapacidad.'})
@@ -48,17 +29,19 @@ class UserSerializer(serializers.ModelSerializer):
     
     def create(self, validated_data):
         is_staff = validated_data.pop('is_staff', False)  # Obtener is_staff del frontend
-        password = validated_data.pop('password', None)  # Obtener la contraseña (si la hay)
-        # Si no hay contraseña para roles que no sean 'CLIENTE', se debe lanzar una excepción
-        if validated_data.get('role') != 'CLIENTE' and not password:
-            raise serializers.ValidationError({'password': 'La contraseña es obligatoria para este rol.'})
+        # password = validated_data.pop('password', None)  # Obtener la contraseña (si la hay)
+        # # Si no hay contraseña para roles que no sean 'CLIENTE', se debe lanzar una excepción
+        # if validated_data.get('role') != 'CLIENTE' and not password:
+        #     raise serializers.ValidationError({'password': 'La contraseña es obligatoria para este rol.'})
+        validated_data.pop('password', None)
+
 
         # Crear el usuario
         user = User(**validated_data)
         user.is_staff = is_staff
 
-        if password:
-            user.set_password(password)  # Si hay contraseña, establecerla
+        # if password:
+        #     user.set_password(password)  # Si hay contraseña, establecerla
 
         user.save()  # Guardar el usuario
         return user

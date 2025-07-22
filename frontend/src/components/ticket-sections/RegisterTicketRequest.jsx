@@ -97,7 +97,6 @@ const RegisterTicketRequest = () => {
             {error && <div className="alert alert-danger">{error}</div>}
             <form onSubmit={handleSubmit}>
 
-
                 <div className="form-row">
                     <div className="form-group">
                         <label htmlFor="first_name">Nombre</label>

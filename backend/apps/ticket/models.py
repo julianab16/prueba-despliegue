@@ -2,6 +2,7 @@ from django.db import models
 from apps.attention_point.models import Attention_Point
 from apps.user.models import User
 from django.core.exceptions import ValidationError
+import random
 
 class Ticket(models.Model):
     # El ticket puede estar en proceso, cerrado o abierto
@@ -27,12 +28,19 @@ class Ticket(models.Model):
         db_table = "ticket"
         
     def __str__(self):
-        return self.user.username
+        return f"Ticket {self.id_ticket}"
     
     def save(self, *args, **kwargs):
         if self.user.role != 'CLIENTE':
             raise ValidationError("Solo los usuarios con rol 'CLIENTE' pueden crear tickets.")
-        
         if self.user.prioridad :
             self.priority = 'high'
+            letra = 'P-'
+        else:
+            letra = 'G-'
+        for _ in range(100):
+            numero = random.randint(100, 999)  
+            self.id_ticket = f"{letra}{numero}"
+            if not Ticket.objects.filter(id_ticket=self.id_ticket).exists():
+                break
         super().save(*args, **kwargs)
