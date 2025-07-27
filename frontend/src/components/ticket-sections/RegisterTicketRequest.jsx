@@ -1,7 +1,7 @@
 "use client"
 
 import { useState } from "react"
-import { useNavigate, Link, useLocation } from "react-router-dom"
+import { useNavigate, useLocation } from "react-router-dom"
 import { useTicketRequest } from "./UseTicketRequest"
 import { userService } from "../../services/api"
 
@@ -13,19 +13,18 @@ const RegisterTicketRequest = () => {
     const dniFromQuery = searchParams.get("dni") || ""
 
     const [formData, setFormData] = useState({
-        username: "null",
         first_name: "",
         last_name: "",
         email: "",
         dni: dniFromQuery,
         phone_number: "",
         prioridad: false,
-        role: "CLIENTE", // Fijo para cliente
+        role: "CLIENTE", 
     })
 
     const [loading, setLoading] = useState(false)
     const [error, setError] = useState("")
-    const { pedirTicket, error: ticketError, success: ticketSuccess } = useTicketRequest()
+    const { pedirTicket, error: ticketError } = useTicketRequest()
 
     const isDniDisabled = !!dniFromQuery
 

@@ -7,7 +7,6 @@ export const api = axios.create({
   },
 })
 
-// Add a request interceptor to add the auth token to requests
 api.interceptors.request.use(
   (config) => {
     const token = localStorage.getItem("accessToken")
@@ -19,7 +18,6 @@ api.interceptors.request.use(
   (error) => Promise.reject(error),
 )
 
-// Add a response interceptor to handle token refresh
 api.interceptors.response.use(
   (response) => response,
   async (error) => {
@@ -35,7 +33,6 @@ api.interceptors.response.use(
           return Promise.reject(error)
         }
 
-        // Aquí se refresca el token
         const response = await axios.post("http://localhost:8000/api/token/refresh/", {
           refresh: refreshToken,
         })
@@ -61,12 +58,11 @@ export const userService = {
   getByDni: (dni) => api.get(`/api/users/by_dni/?dni=${dni}`),
   create: (data) => api.post("/api/users/", data),
   update: (id, data) => api.put(`/api/users/${id}/`, data),
-  partialUpdate: (id, data) => api.patch(`/api/users/${id}/`, data),
   delete: (id) => api.delete(`/api/users/${id}/`),
 }
 
 export const attentionPointService = {
-  getAll: () => api.get("/api/attention-points/"), // Asegúrate de que esta ruta coincida con tu backend
+  getAll: () => api.get("/api/attention-points/"), 
   create: (data) => api.post("/api/attention-points/", data),
   delete: (id) => api.delete(`/api/attention-points/${id}/`),
 }
@@ -74,4 +70,21 @@ export const attentionPointService = {
 export const ticketService = {
   getAll: () => api.get("/api/tickets/"),
   create: (data) => api.post("/api/tickets/", data),
+  assignToPoint: (ticketId, pointId) => api.post("/api/tickets/assign/", {
+    ticket_id: ticketId,
+    attention_point_id: pointId
+  }),
+  unassignTicket: (ticketId) => api.post("/api/tickets/unassign/", {
+    ticket_id: ticketId
+  })
+}
+
+export const publicityService = {
+  getAll: () => api.get("/api/publicity/"),
+  getById: (id) => api.get(`/api/publicity/${id}/`),
+  create: (formData) => {
+    return api.post("/api/publicity/", formData, {
+      headers: {'Content-Type': 'multipart/form-data',}});
+    },
+  delete: (id) => api.delete(`/api/publicity/${id}/`),
 }

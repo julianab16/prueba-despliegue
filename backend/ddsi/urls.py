@@ -23,11 +23,10 @@ from apps.user import urls as user_urls
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('ticket/', include('apps.ticket.urls')), 
-    path('api/attention-points/', include('apps.attention_point.urls')),  # Nueva ruta    
+    path('api/attention-points/', include('apps.attention_point.urls')),   
     path('api/', include('apps.user.urls')),  
-    path('api/', include('apps.ticket.urls')),  # Asegúrate de que esta línea esté presente
-    #path('', include('apps.user.urls')),
-    #path('hola/', views.hello),
+    path('api/', include('apps.ticket.urls')),  
+    path('', include('apps.publicity.urls')), 
 ]
 
 if settings.DEBUG:

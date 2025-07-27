@@ -585,7 +585,7 @@ td:last-child a:first-child:hover {
 
 .attention-points-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); /* Ajusta el tamaño mínimo de los elementos */
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); /* Ajusta el tamaño mínimo de los elementos */
   gap: 1rem;
   flex-grow: 1; /* Permite que la grilla ocupe todo el espacio disponible */
 }
@@ -594,17 +594,88 @@ td:last-child a:first-child:hover {
   background-color: #333;
   padding: 1rem;
   text-align: center;
-  border-radius: 4px;
+  border-radius: 6px;
   color: white;
   font-weight: bold;
   display: flex;
+  flex-direction: column; /* Cambia a columna para apilar elementos */
+  align-items: center;
+  justify-content: space-between;
+  height: 125px; /* Altura fija para los puntos de atención */
+  border: 2px solid #444;
+  transition: background-color 0.3s ease, border-color 0.3s ease;
+}
+
+.attention-point-id {
+  font-size: 1.2rem;
+  margin-bottom: 1rem;
+  color: #fff;
+}
+
+.attention-point-slot {
+  height: 50px;
+  background-color: red;
+  border: 2px dashed #777;
+  border-radius: 4px;
+  position: relative; 
+  display: flex;
+  align-items: center;
+  width: 100%;
+  overflow: hidden; /* Importante para contener el botón */
+}
+
+.attention-point-slot .ticket-content {
+  width: 100%;
+  text-align: center;
+  padding: 0.5rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  transition: transform 0.3s ease, width 0.3s ease;
+}
+
+.ticket-content.showing-button {
+  transform: translateX(0px);
+  width: calc(100% - 50px); /* Hacer espacio para el botón */
+}
+
+.close-ticket-btn {
+  position: absolute;
+  right: 5px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 40px;
+  height: 40px;
+  background-color: transparent;
+  border: none;
+  border-radius: 4px;
+  color: white;
+  display: flex;
   align-items: center;
   justify-content: center;
-  height: 100px; /* Altura fija para los puntos de atención */
+  cursor: pointer;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.close-ticket-btn.visible {
+  opacity: 1;
+}
+
+.attention-point-slot.slot-available {
+  background-color: transparent;
+  border-color: #4A90E2;
+  color: #fff;
+}
+
+.attention-point-slot.slot-occupied {
+  background-color: #e74c3c;
+  border-color: #e74c3c;
+  color: #fff;
 }
 
 .tickets-panel {
-  flex: 1; /* Ocupa 1/4 del espacio */
+  flex: 0.6; /* Cuanto ocupa la lista con respecto a la grilla de PA */
   background-color: var(--primary-color);
   padding: 1rem;
   border-radius: 8px;
@@ -660,6 +731,62 @@ td:last-child a:first-child:hover {
 .search-bar:focus {
   border-color: #2563eb;
   box-shadow: 0 0 0 3px rgba(31, 78, 152, 0.3);
+}
+
+/* GenericList component styles */
+.generic-list-container {
+  margin-bottom: 2rem;
+}
+
+.list-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5rem;
+  padding-bottom: 0.75rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.list-title {
+  font-size: 1.8rem;
+  font-weight: 1200;
+  margin: 0;
+  color: var(--primary-color);
+}
+
+.create-button {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1.25rem;
+  min-width: 160px;
+  min-height: 48px;
+  font-size: 1.05rem;
+}
+
+.search-container {
+  margin-bottom: 1.5rem;
+}
+
+.search-bar {
+  width: 100%;
+  max-width: fill;
+  padding: 0.75rem 1rem;
+  margin-bottom: 1rem;
+  border-radius: 8px;
+}
+
+.loading-indicator {
+  text-align: center;
+  padding: 2rem;
+  font-size: 1.1rem;
+  color: #888;
+}
+
+.table-container {
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
 }
 
 /* Responsive */

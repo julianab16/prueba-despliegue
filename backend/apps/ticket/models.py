@@ -22,7 +22,7 @@ class Ticket(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='tickets_created')
-    #punto_atencion = models.ForeignKey(Attention_Point, on_delete=models.SET_NULL, null=True)
+    punto_atencion = models.ForeignKey(Attention_Point, on_delete=models.SET_NULL, null=True)
     
     class Meta:
         db_table = "ticket"
@@ -33,14 +33,15 @@ class Ticket(models.Model):
     def save(self, *args, **kwargs):
         if self.user.role != 'CLIENTE':
             raise ValidationError("Solo los usuarios con rol 'CLIENTE' pueden crear tickets.")
-        if self.user.prioridad :
-            self.priority = 'high'
-            letra = 'P-'
-        else:
-            letra = 'G-'
-        for _ in range(100):
-            numero = random.randint(100, 999)  
-            self.id_ticket = f"{letra}{numero}"
-            if not Ticket.objects.filter(id_ticket=self.id_ticket).exists():
-                break
+        if not self.id_ticket:
+            if self.user.prioridad :
+                self.priority = 'high'
+                letra = 'P-'
+            else:
+                letra = 'G-'
+            for _ in range(100):
+                numero = random.randint(100, 999)  
+                self.id_ticket = f"{letra}{numero}"
+                if not Ticket.objects.filter(id_ticket=self.id_ticket).exists():
+                    break
         super().save(*args, **kwargs)

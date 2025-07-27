@@ -3,18 +3,32 @@
 
 import { Link, useLocation } from "react-router-dom"
 import { useAuth } from "../context/AuthContext"
-import { useState, useEffect } from "react"
+import { useState, useEffect, useRef } from "react"
 import { FiLogOut } from "react-icons/fi"
 
 const Navbar = () => {
   const { isAuthenticated, logout, user } = useAuth()
   const [infoOpen, setInfoOpen] = useState(false)
+  const dropdownRef = useRef(null)
   const location = useLocation()
 
   useEffect(() => {
     setInfoOpen(false)
   }, [location.pathname])
 
+  useEffect(() => {
+    function handleClickOutside(event) {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+        setInfoOpen(false)
+      }
+    }
+    
+    document.addEventListener("mousedown", handleClickOutside)
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside)
+    }
+  }, [dropdownRef])
+  
   const handleLogout = async () => {
     await logout()
   }
@@ -27,33 +41,30 @@ const Navbar = () => {
 
       {isAuthenticated ? (
         <div className="navbar-links">
+          
           <Link to="/dashboard">Dashboard</Link>
+
           {user?.role !== "CLIENTE" && <Link to="/">Gestion de tickets</Link>}
-          {/* {user?.role == "ADMINISTRADOR" && <Link to="/attention-points">Lista PA</Link>} */}
-          {/* {user?.role == "ADMINISTRADOR" && <Link to="/users">Usuarios</Link>} */}
-          <div
-            className="dropdown"
-            onMouseEnter={() => setInfoOpen(true)}
-            onMouseLeave={() => setInfoOpen(false)}
-          >
+
+          <div className="dropdown" ref={dropdownRef}>
             <span
               className="navbar-link dropdown-toggle"
+              onClick={() => setInfoOpen(!infoOpen)}
               tabIndex={0}
               style={{ cursor: "pointer" }}
             >
               Listas ▾
             </span>
             <div className={`dropdown-menu${infoOpen ? " open" : ""}`}>
-              {user?.role === "ADMINISTRADOR" && (
-                <Link className="dropdown-item" to="/users">
-                  Usuarios
+              {user?.role === "ADMINISTRADOR" && [
+                { to: "/users", text: "Usuarios" },
+                { to: "/attention-points", text: "Puntos de atención" },
+                { to: "/publicity", text: "Publicidad" }
+              ].map((item, index) => (
+                <Link key={index} className="dropdown-item" to={item.to}>
+                  {item.text}
                 </Link>
-              )}
-              {user?.role === "ADMINISTRADOR" && (
-                <Link className="dropdown-item" to="/attention-points">
-                  Puntos de atención
-                </Link>
-              )}
+              ))}
             </div>
           </div>
 

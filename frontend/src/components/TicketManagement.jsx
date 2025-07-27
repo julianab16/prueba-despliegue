@@ -1,8 +1,7 @@
 "use client"
 import { useState, useEffect } from "react";
 import AttentionPointsGrid from "./AttentionPointsGrid";
-import { ticketService } from "../services/api"; // Importa el servicio de API
-
+import { ticketService } from "../services/api"; 
 
 const TicketManagement = () => {
   const [tickets, setTickets] = useState([]);
@@ -12,7 +11,6 @@ const TicketManagement = () => {
   const fetchTickets = async () => {
     try {
       const response = await ticketService.getAll(); 
-      console.log("Tickets obtenidos:", response.data); 
       setTickets(response.data);
       setError("");
     } catch (err) {
@@ -31,8 +29,8 @@ const TicketManagement = () => {
     e.dataTransfer.setData("ticketId", ticket.id_ticket);
   };
 
-  const handleDragEnd = () => {
-    // Mas adelante poner aquui la logica para limpiar los estados del punto
+  const handleTicketAssigned = (ticketId) => {
+    setTickets(prev => prev.filter(ticket => ticket.id_ticket !== ticketId));
   };
 
   if (loading) {
@@ -46,7 +44,7 @@ const TicketManagement = () => {
         <div className="attention-points-header">
           <h3>Puntos de Atención</h3>
         </div>
-        <AttentionPointsGrid />
+        <AttentionPointsGrid onTicketAssigned={handleTicketAssigned}/>
       </div>
 
       {/* Panel derecho: Lista de tickets */}
@@ -61,7 +59,6 @@ const TicketManagement = () => {
                 className={`ticket-item${idx === 0 ? " ticket-head" : ""}`}
                 draggable={idx === 0}
                 onDragStart={idx === 0 ? (e) => handleDragStart(e, ticket) : undefined}
-                onDragEnd={idx === 0 ? handleDragEnd : undefined}
               >
                 Ticket {ticket.id_ticket} - {ticket.status}
               </li>

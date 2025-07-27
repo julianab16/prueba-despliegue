@@ -1,7 +1,7 @@
 from django.db import models
 
 class Publicity(models.Model):
-    id_publicity =  models.CharField(max_length=255, primary_key=True)
+    id_publicity = models.CharField(max_length=3, primary_key=True, editable=False)
     title = models.CharField(max_length=255)
     content = models.TextField()
     image = models.ImageField(upload_to='publicidad_images', null=True)
@@ -12,5 +12,15 @@ class Publicity(models.Model):
     class Meta:
         db_table = "publicidad"
         
+    def save(self, *args, **kwargs):
+        if not self.id_publicity:
+            last = Publicity.objects.order_by('-id_publicity').first()
+            if last and last.id_publicity.isdigit():
+                new_id = int(last.id_publicity) + 1
+            else:
+                new_id = 1
+            self.id_publicity = f"{new_id:03d}"
+        super().save(*args, **kwargs)
+    
     def __str__(self):
         return self.title

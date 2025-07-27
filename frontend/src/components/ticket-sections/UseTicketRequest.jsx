@@ -5,16 +5,12 @@ export function useTicketRequest() {
   const [error, setError] = useState("")
   const [success, setSuccess] = useState("")
   const [loading, setLoading] = useState(false)
-  const [formData, setFormData] = useState({
-    dni: "",
-    prioridad: false,
-  })
 
-  // Cambia el valor de retorno cuando el usuario no existe
   const pedirTicket = async ({ dni, prioridad }) => {
     setError("")
     setSuccess("")
     setLoading(true)
+
     try {
       if (!/^\d{7,10}$/.test(dni)) {
         setError("No es un número de documento válido")
@@ -23,7 +19,7 @@ export function useTicketRequest() {
       }
       const userRes = await userService.getByDni(dni)
       const user = userRes.data[0]
-      console.log("Usuario encontrado:", user)
+
       if (!user) {
         setError("Usuario no encontrado")
         setLoading(false)
@@ -32,7 +28,7 @@ export function useTicketRequest() {
       const ticketRes = await ticketService.create({
               user: user.id,
               priority: prioridad ? "high" : "low",
-              status: 'open',           // o el valor por defecto que acepte tu modelo
+              status: 'open',
       })
       setSuccess("Ticket creado exitosamente")
       setLoading(false)

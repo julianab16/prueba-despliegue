@@ -1,16 +1,18 @@
 from django.shortcuts import render, redirect
-
-# Create your views here.
 from .forms import PublicityForm as SubirDumentoImagenForm
 from .models import Publicity as SubirDumentoImagen
 from rest_framework.views import APIView
+from rest_framework.response import Response
+from rest_framework import status
+from rest_framework.parsers import MultiPartParser, FormParser
+from .models import Publicity
+from .serializer import PublicitySerializer
 
-class PublicityView(APIView):
+class PublicityView(APIView): #requiero explicacion de que es esto -Juan
 
 	def homepage(request):
 		form = SubirDumentoImagenForm()
 		return render(request, 'index.html', {'form': form})
-	#homepage funcion para renderizar la pagina de inicio
 
 	def upload(request):
 		if request.method == "POST":
@@ -26,3 +28,34 @@ class PublicityView(APIView):
 		publicity = SubirDumentoImagen.objects.get(id_publicity=id)
 		publicity.delete()
 		return redirect("homepage")
+
+class PublicityListView(APIView):
+    parser_classes = (MultiPartParser, FormParser)
+    
+    def get(self, request):
+        publicity = Publicity.objects.all()
+        serializer = PublicitySerializer(publicity, many=True)
+        return Response(serializer.data)
+        
+    def post(self, request):
+        serializer = PublicitySerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+class PublicityDetailView(APIView):
+    parser_classes = (MultiPartParser, FormParser)
+    
+    def get_object(self, pk):
+        try:
+            return Publicity.objects.get(pk=pk)
+        except Publicity.DoesNotExist:
+            return None
+    
+    def delete(self, request, pk):
+        publicity = self.get_object(pk)
+        if not publicity:
+            return Response(status=status.HTTP_404_NOT_FOUND)
+        publicity.delete()
+        return Response(status=status.HTTP_204_NO_CONTENT)

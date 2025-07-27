@@ -10,15 +10,13 @@ const UserForm = () => {
   const isEditMode = !!id
 
   const [formData, setFormData] = useState({
-    //username: "",
     first_name: "",
     last_name: "",
     email: "",
     dni: "",
     phone_number: "",
-    //password: "",
     is_staff: false,
-    role: "CLIENTE", // Valor predeterminado para el rol
+    role: "CLIENTE", 
     prioridad: false,
   })
 
@@ -34,12 +32,9 @@ const UserForm = () => {
         const response = await userService.getById(id)
         const userData = response.data
 
-        // Remove password as it's not returned from the API
-        const { password, ...userDataWithoutPassword } = userData
-
         setFormData({
-          ...userDataWithoutPassword,
-          password: "", // Clear password field for security
+          ...userData,
+          password: "", 
         })
       } catch (err) {
         setError("Error al cargar los datos del usuario")
@@ -59,21 +54,11 @@ const UserForm = () => {
     setFormData((prev) => ({
       ...prev,
       [name]: type === "checkbox" ? checked : value,
-      // [name]: type === "checkbox" ? checked : value,
     }))
   }
 
   const validateForm = () => {
-    // Basic validation
-    // if (!formData.username) return "El nombre de usuario es obligatorio"
     if (!formData.email) return "El email es obligatorio"
-    // if (formData.role !== "CLIENTE" && !formData.password) {
-    //   return "La contraseña es obligatoria para administradores y empleados"
-    // }
-    // if (formData.role !== "CLIENTE" && !formData.password) {
-    //   return "La contraseña es obligatoria para administradores y empleados"
-    // }
-
     return null
   }
 

@@ -1,97 +1,91 @@
-// app/components/ListaPuntos.jsx
 "use client"
 
 import { useEffect, useState } from "react"
 import { attentionPointService } from "../services/api"
-import { Link } from "react-router-dom"
-import { MdDelete } from "react-icons/md"
+import GenericList from "./GenericList";
 
 const AttentionPointList = () => {
   const [puntos, setPuntos] = useState([])
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState("")
+  const [successMessage, setSuccessMessage] = useState("")
+
+  const fetchAttentionPoints = async () => {
+    try {
+      const response = await attentionPointService.getAll();
+      setPuntos(response.data);
+      setError("");
+    } catch (err) {
+      setError("Error al cargar los puntos de atención");
+      console.error(err);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await attentionPointService.getAll()
-        setPuntos(response.data)
-      } catch (err) {
-        console.error(err)
-        setError("Error al cargar los puntos de atención")
-      } finally {
-        setLoading(false)
-      }
-    }
-
-    fetchData()
-  }, [])
+    fetchAttentionPoints();
+  }, []);
 
   const handleCreateAttentionPoint = async () => {
     try {
-      await attentionPointService.create({})
-      const response = await attentionPointService.getAll()
-      setPuntos(response.data)
+      await attentionPointService.create({});
+      setSuccessMessage("Punto de atención creado con éxito");
+      fetchAttentionPoints();
+      
+      setTimeout(() => {
+        setSuccessMessage("");
+      }, 3000);
     } catch (err) {
-      setError("Error al crear el punto de atención")
+      setError("Error al crear el punto de atención");
+      console.error(err);
     }
-  }
+  };
 
   const handleDelete = async (id) => {
     if (!window.confirm("¿Está seguro que desea eliminar este punto de atención?")) {
-      return
+      return;
     }
     try {
-      await attentionPointService.delete(id)
-      setPuntos((prev) => prev.filter((p) => p.attention_point_id !== id))
+      await attentionPointService.delete(id);
+      setSuccessMessage("Punto de atención eliminado con éxito");
+      setPuntos((prev) => prev.filter((p) => p.attention_point_id !== id));
+      
+      setTimeout(() => {
+        setSuccessMessage("");
+      }, 3000);
     } catch (err) {
-      setError("Error al eliminar el punto de atención")
+      setError("Error al eliminar el punto de atención");
+      console.error(err);
     }
-  }
+  };
 
-  if (loading) return <div>Cargando...</div>
-  if (error) return <div className="alert alert-danger">{error}</div>
+  const columns = [
+    { key: "attention_point_id", label: "ID" },
+    { 
+      key: "availability", 
+      label: "Disponibilidad", 
+      render: (item) => (item.availability ? "Disponible" : "Ocupado")
+    }
+  ];
 
   return (
     <div>
-      <div
-        className="header-actions"
-        style={{ display: "flex", justifyContent: "space-between", marginBottom: "1rem" }}
-      >
-        <h2 style={{ color: "black" }}>Lista de Puntos de Atención</h2>
-        <button className="btn btn-primary" onClick={handleCreateAttentionPoint}>
-          Nuevo punto de atención
-        </button>
-      </div>
-
-      <div className="table-container">
-        <table>
-            <thead>
-            <tr>
-                <th>ID</th>
-                <th>Disponibilidad</th>
-                <th>Acciones</th>
-            </tr>
-            </thead>
-            <tbody>
-            {puntos.map((punto) => (
-                <tr key={punto.attention_point_id}>
-                  <td>{punto.attention_point_id}</td>
-                  <td>{punto.availability ? "Disponible" : "Ocupado"}</td>
-                  <td className="action-buttons">
-                    <button
-                    type="button"
-                    onClick={() => handleDelete(punto.attention_point_id)} className="icon-button delete-icon" title="Eliminar">
-                      <MdDelete/>
-                    </button>
-                  </td>
-                </tr>
-            ))}
-            </tbody>
-        </table>
-      </div>
+      {successMessage && <div className="alert alert-success">{successMessage}</div>}
+      <GenericList
+        title="Lista de Puntos de Atención" 
+        items={puntos}
+        columns={columns}
+        loading={loading}
+        error={error}
+        onDelete={handleDelete}
+        showActions={true}
+        onCreateClick={handleCreateAttentionPoint}
+        // createButtonText="Nuevo punto de atención"
+        showSearch={false}
+      />
     </div>
-  )
-}
+  );
+};
 
-export default AttentionPointList
+export default AttentionPointList;

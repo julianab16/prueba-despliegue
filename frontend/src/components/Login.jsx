@@ -12,7 +12,6 @@ const Login = () => {
   const { login, isAuthenticated } = useAuth()
   const navigate = useNavigate()
 
-  // If already logged in, redirect to dashboard
   if (isAuthenticated) {
     return <Navigate to="/" />
   }
@@ -37,7 +36,6 @@ const Login = () => {
       }
     } catch (err) {
       setError("Error al iniciar sesión. Intente nuevamente.")
-      console.error(err)
     } finally {
       setLoading(false)
     }

@@ -10,6 +10,8 @@ import ProtectedRoute from "./components/ProtectedRoute"
 import NormalTicketRequest from "./components/ticket-sections/NormalTicketRequest"
 import RegisterTicketRequest from "./components/ticket-sections/RegisterTicketRequest"
 import AttentionPointList from "./components/AttentionPointList"
+import PublicityList from "./components/PublicityList";
+import PublicityForm from "./components/PublicityForm";
 
 function AppContent() {
   const location = useLocation()
@@ -79,6 +81,16 @@ function AppContent() {
                 <AttentionPointList />
               </ProtectedRoute>
             }
+          />
+          <Route path="/publicity" 
+          element={
+          <PublicityList />
+          } 
+          />
+          <Route path="/publicity/create" 
+          element={
+          <PublicityForm />
+          } 
           />
           <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>
