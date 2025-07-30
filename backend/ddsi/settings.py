@@ -30,7 +30,12 @@ SECRET_KEY = 'django-insecure-3x+9do#w1nze2psti0+*#qwexo_d5jm097()i0ed6%t_wlr^q4
 
 ################
 DEBUG = False
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = [
+    'qline.onrender.com',
+    'prueba-despliegue-nqi4.onrender.com',
+    'localhost',
+    '127.0.0.1'
+]
 ###############
 
 # Application definition
@@ -62,7 +67,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'whitenoise.middleware.WhiteNoiseMiddleware'
+    'whitenoise.middleware.WhiteNoiseMiddleware' ##########
 ]
 
 ROOT_URLCONF = 'ddsi.urls'
@@ -130,7 +135,9 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
 
+##################################################
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+##################################################
 STATIC_URL = '/static/'
 
 # Default primary key field type
@@ -147,9 +154,11 @@ REST_FRAMEWORK = {
     ),
 }
 
+##########################
 CORS_ALLOWED_ORIGINS = [
     "https://qline.onrender.com",  # dominio de tu frontend
 ]
+#########################
 
 SIMPLE_JWT = {
     'ACCESS_TOKEN_LIFETIME': timedelta(minutes=60),
