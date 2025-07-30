@@ -8,8 +8,10 @@ services:
       - key: DJANGO_SETTINGS_MODULE
         value: backend.settings
       - fromGroup: supabase-creds
+    nota:
 
   - type: static
     name: react-frontend
     buildCommand: cd frontend && npm install && npm run dev
     staticPublishPath: frontend/dist
+    nota: primero limpiar el node_mobile y package lockjson, volver a crearlos
