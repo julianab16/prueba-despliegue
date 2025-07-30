@@ -1,7 +1,9 @@
 import axios from "axios"
 
+const API_URL = import.meta.env.VITE_API_URL || "http://localhost:8000";
+
 export const api = axios.create({
-  baseURL: "http://localhost:8000",
+  baseURL: API_URL,
   headers: {
     "Content-Type": "application/json",
   },
@@ -32,8 +34,8 @@ api.interceptors.response.use(
           window.location.href = "/login"
           return Promise.reject(error)
         }
-
-        const response = await axios.post("http://localhost:8000/api/token/refresh/", {
+        
+        const response = await axios.post(`${API_URL}/api/token/refresh/`, {
           refresh: refreshToken,
         })
 
