@@ -1,0 +1,15 @@
+services:
+  - type: web
+    name: django-backend
+    env: python
+    buildCommand: pip install -r requirements.txt
+    startCommand: gunicorn backend.wsgi
+    envVars:
+      - key: DJANGO_SETTINGS_MODULE
+        value: backend.settings
+      - fromGroup: supabase-creds
+
+  - type: static
+    name: react-frontend
+    buildCommand: cd frontend && npm install && npm run dev
+    staticPublishPath: frontend/dist
