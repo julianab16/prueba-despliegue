@@ -148,7 +148,7 @@ REST_FRAMEWORK = {
 }
 
 CORS_ALLOWED_ORIGINS = [
-    'http://localhost:5173',  # React app URL
+    "https://qline.onrender.com",  # dominio de tu frontend
 ]
 
 SIMPLE_JWT = {
