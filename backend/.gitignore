@@ -13,7 +13,6 @@ env.bak/
 venv.bak/
 
 # Django-related files
-db.sqlite3
 *.log
 media/
 staticfiles/

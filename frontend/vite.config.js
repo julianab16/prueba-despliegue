@@ -3,6 +3,12 @@ import react from '@vitejs/plugin-react'
 
 // https://vite.dev/config/
 export default defineConfig({
-  base: '/', // ← Esto es importante para que el deploy funcione
   plugins: [react()],
+  build: {
+    outDir: 'dist'
+  },
+  server: {
+    port: 5173
+  },
+  base: '/', // ← Esto es importante para que el deploy funcione
 })

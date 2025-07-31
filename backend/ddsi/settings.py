@@ -30,6 +30,7 @@ SECRET_KEY = 'django-insecure-3x+9do#w1nze2psti0+*#qwexo_d5jm097()i0ed6%t_wlr^q4
 
 ################
 DEBUG = False
+ALLOWED_HOSTS = ['*']
 ALLOWED_HOSTS = [
     'qline.onrender.com',
     'prueba-despliegue-nqi4.onrender.com',
