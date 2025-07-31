@@ -8,7 +8,7 @@ export default defineConfig({
     outDir: 'dist'
   },
   server: {
-    port: 5173
+    historyApiFallback: true,
   },
   base: '/', // ← Esto es importante para que el deploy funcione
 })
